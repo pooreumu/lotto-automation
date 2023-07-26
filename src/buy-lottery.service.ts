@@ -74,7 +74,7 @@ export class PurchaseLottery {
             By.name('password'),
         );
         await userIdInputElement.sendKeys(process.env.USER_ID ?? '');
-        await passwordInputElement.sendKeys(process.env.PASSWORD ?? '');
+        await passwordInputElement.sendKeys(process.env.USER_PW ?? '');
 
         const loginButtonElement = await driver.findElement(
             By.className('btn_common lrg blu'),
