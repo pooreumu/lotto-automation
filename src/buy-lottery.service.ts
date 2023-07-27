@@ -23,7 +23,11 @@ export class PurchaseLottery {
 
     private async saveResult(driver: WebDriver) {
         const screenshot = await driver.takeScreenshot();
-        fs.writeFileSync('screenshot.png', screenshot, 'base64');
+        fs.writeFileSync(
+            `${__dirname}/../screenshots/${new Date().toISOString()}screenshot.png`,
+            screenshot,
+            'base64',
+        );
     }
 
     private async approvePurchase(driver: WebDriver) {
