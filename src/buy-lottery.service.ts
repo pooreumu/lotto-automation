@@ -87,6 +87,8 @@ export class PurchaseLottery {
     }
 
     private async getLotteryPage(driver: WebDriver) {
-        await driver.get('https://dhlottery.co.kr/common.do?method=main');
+        await driver.get(
+            'https://dhlottery.co.kr/common.do?method=main&mainMode=default',
+        );
     }
 }
