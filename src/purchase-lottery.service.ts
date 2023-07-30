@@ -1,12 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { Cron } from '@nestjs/schedule';
 import { Builder, By, WebDriver } from 'selenium-webdriver';
 import fs from 'fs';
+import * as process from 'process';
 
 @Injectable()
-export class PurchaseLottery {
-    @Cron('0 0 18 * * 5')
-    async execute() {
+export class PurchaseLotteryService {
+    async execute(filePath: string) {
         const driver = await new Builder().forBrowser('chrome').build();
 
         await this.getLotteryPage(driver);
@@ -16,18 +15,14 @@ export class PurchaseLottery {
         await this.selectAutomaticNumber(driver);
         await this.purchase(driver);
         await this.approvePurchase(driver);
-        await this.saveResult(driver);
+        await this.saveResult(driver, filePath);
 
         await driver.quit();
     }
 
-    private async saveResult(driver: WebDriver) {
+    private async saveResult(driver: WebDriver, filePath: string) {
         const screenshot = await driver.takeScreenshot();
-        fs.writeFileSync(
-            `${__dirname}/../screenshots/${new Date().toISOString()}screenshot.png`,
-            screenshot,
-            'base64',
-        );
+        fs.writeFileSync(filePath, screenshot, 'base64');
     }
 
     private async approvePurchase(driver: WebDriver) {
