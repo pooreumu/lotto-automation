@@ -4,9 +4,9 @@ import { createReadStream } from 'fs';
 import * as process from 'process';
 
 @Injectable()
-export class SlackService {
+export class SlackUseCase {
     private readonly client: WebClient;
-    private readonly logger = new Logger(SlackService.name);
+    private readonly logger = new Logger(SlackUseCase.name);
 
     constructor() {
         this.client = new WebClient(process.env.SLACK_TOKEN, {
