@@ -1,28 +1,34 @@
 import { Injectable } from '@nestjs/common';
-import { PurchaseLotteryService } from './purchase-lottery.service';
-import { SlackService } from './slack.service';
+import { PurchaseLotteryUseCase } from './use-case/purchase-lottery.use-case';
+import { SlackUseCase } from './use-case/slack.use-case';
 import { Cron } from '@nestjs/schedule';
+import { GetWinResultLotteryUseCase } from './use-case/get-win-result-lottery.use-case';
 
 @Injectable()
 export class AppService {
-    filePath: string;
-
     constructor(
-        private readonly purchaseLotteryService: PurchaseLotteryService,
-        private readonly slackService: SlackService,
-    ) {
-        this.filePath = `${__dirname}/../screenshots`;
-    }
+        private readonly slackUseCase: SlackUseCase,
+        private readonly purchaseLotteryUseCase: PurchaseLotteryUseCase,
+        private readonly getWinResultLotteryUseCase: GetWinResultLotteryUseCase,
+    ) {}
 
     @Cron('0 0 18 * * 5')
     async purchaseLottery() {
-        this.assignFilePath();
-        await this.purchaseLotteryService.execute(this.filePath);
-        await this.slackService.sendNotification(this.filePath);
+        await this.purchaseLotteryUseCase.execute();
+        await this.slackUseCase.sendNotification(
+            this.purchaseLotteryUseCase.filePath +
+                this.purchaseLotteryUseCase.fileName,
+            'Here you are :four_leaf_clover:',
+        );
     }
 
-    private assignFilePath() {
-        this.filePath =
-            this.filePath + `/${new Date().toISOString()}screenshot.png`;
+    @Cron('0 0 22 * * 6')
+    async getWinResultLottery() {
+        await this.getWinResultLotteryUseCase.execute();
+        await this.slackUseCase.sendNotification(
+            this.getWinResultLotteryUseCase.filePath +
+                this.getWinResultLotteryUseCase.fileName,
+            'WINNER WINNER CHICKEN DINNER :trophy:',
+        );
     }
 }
