@@ -14,11 +14,11 @@ export class SlackService {
         });
     }
 
-    public async sendNotification(fileName: string) {
+    public async sendNotification(fileName: string, message: string) {
         try {
             await this.client.files.upload({
                 channels: process.env.SLACK_CHANNEL_ID,
-                initial_comment: 'Here you are :smile:',
+                initial_comment: message,
                 file: createReadStream(fileName),
             });
         } catch (e: unknown) {
