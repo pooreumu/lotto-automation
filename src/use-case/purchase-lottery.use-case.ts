@@ -10,7 +10,7 @@ export class PurchaseLotteryUseCase {
     private driver: WebDriver;
     private _filePath = `${__dirname}/../screenshots/`;
     private _fileName: string;
-    private _screenshot: string;
+    private screenshot: string;
 
     async execute() {
         this.assignFileName();
@@ -53,10 +53,10 @@ export class PurchaseLotteryUseCase {
             By.id('popReceipt'),
         );
         try {
-            this._screenshot = await popupReceiptElement.takeScreenshot();
+            this.screenshot = await popupReceiptElement.takeScreenshot();
         } catch (e) {
             if (e instanceof WebDriverError) {
-                this._screenshot = await this.driver.takeScreenshot();
+                this.screenshot = await this.driver.takeScreenshot();
             } else {
                 this.logger.error(e);
             }
@@ -64,7 +64,7 @@ export class PurchaseLotteryUseCase {
             this.checkStorage();
             fs.writeFileSync(
                 this._filePath + this._fileName,
-                this._screenshot,
+                this.screenshot,
                 'base64',
             );
         }
