@@ -1,5 +1,9 @@
 # 로또 자동 구매
 
+## 결과
+
+![image](./image/result_middle.png)
+
 ## 사용법
 
 - 동행복권 홈페이지(https://dhlottery.co.kr/common.do?method=main)에 회원가입이 되어 있고, 예치금이 충전 돼 있어야 됩니다.
