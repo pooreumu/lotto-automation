@@ -16,8 +16,7 @@ export class AppService {
     async purchaseLottery() {
         await this.purchaseLotteryUseCase.execute();
         await this.slackUseCase.sendNotification(
-            this.purchaseLotteryUseCase.filePath +
-                this.purchaseLotteryUseCase.fileName,
+            this.purchaseLotteryUseCase.file,
             'Here you are :four_leaf_clover:',
         );
     }
@@ -26,8 +25,7 @@ export class AppService {
     async getWinResultLottery() {
         await this.getWinResultLotteryUseCase.execute();
         await this.slackUseCase.sendNotification(
-            this.getWinResultLotteryUseCase.filePath +
-                this.getWinResultLotteryUseCase.fileName,
+            this.getWinResultLotteryUseCase.file,
             'WINNER WINNER CHICKEN DINNER :trophy:',
         );
     }

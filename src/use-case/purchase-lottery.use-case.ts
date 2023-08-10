@@ -8,8 +8,8 @@ import { WebDriverError } from 'selenium-webdriver/lib/error';
 export class PurchaseLotteryUseCase {
     private logger = new Logger(PurchaseLotteryUseCase.name);
     private driver: WebDriver;
-    private _filePath = `${__dirname}/../screenshots/`;
-    private _fileName: string;
+    private filePath = `${__dirname}/../screenshots/`;
+    private fileName: string;
     private screenshot: string;
 
     async execute() {
@@ -28,16 +28,12 @@ export class PurchaseLotteryUseCase {
         await this.quitDriver();
     }
 
-    public get fileName(): string {
-        return this._fileName;
-    }
-
-    public get filePath(): string {
-        return this._filePath;
+    public get file(): string {
+        return this.filePath + this.fileName;
     }
 
     private assignFileName() {
-        this._fileName = `${new Date().toISOString()}screenshot.png`;
+        this.fileName = `${new Date().toISOString()}screenshot.png`;
     }
 
     private async quitDriver() {
@@ -63,7 +59,7 @@ export class PurchaseLotteryUseCase {
         } finally {
             this.checkStorage();
             fs.writeFileSync(
-                this._filePath + this._fileName,
+                this.filePath + this.fileName,
                 this.screenshot,
                 'base64',
             );
@@ -71,8 +67,8 @@ export class PurchaseLotteryUseCase {
     }
 
     private checkStorage() {
-        if (!fs.existsSync(this._filePath)) {
-            fs.mkdirSync(this._filePath, { recursive: true });
+        if (!fs.existsSync(this.filePath)) {
+            fs.mkdirSync(this.filePath, { recursive: true });
         }
     }
 

@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { Builder, By, WebDriver, WebElement } from 'selenium-webdriver';
-import fs from 'fs';
+import { SaveFile } from '../libs/utils/save-file';
 
 @Injectable()
 export class GetWinResultLotteryUseCase {
     private driver: WebDriver;
     private winResultElement: WebElement;
-    private _filePath = `${__dirname}/../../screenshots/win-result/`;
-    private _fileName: string;
+    private filePath = `${__dirname}/../../screenshots/win-result/`;
+    private fileName: string;
     private screenshot: string;
 
     async execute() {
@@ -19,12 +19,8 @@ export class GetWinResultLotteryUseCase {
         await this.quitDriver();
     }
 
-    public get filePath() {
-        return this._filePath;
-    }
-
-    public get fileName() {
-        return this._fileName;
+    public get file() {
+        return this.filePath + this.fileName;
     }
 
     private async assignWinResult() {
@@ -58,7 +54,7 @@ export class GetWinResultLotteryUseCase {
         const winRoundElement = this.winResultElement.findElement(
             By.css('strong'),
         );
-        this._fileName = (await winRoundElement.getText()) + '.png';
+        this.fileName = (await winRoundElement.getText()) + '.png';
     }
 
     private async assignWinResultElement() {
