@@ -40,14 +40,12 @@ export class GetWinResultLotteryUseCase {
     }
 
     private saveWinResult() {
-        if (!fs.existsSync(this._filePath)) {
-            fs.mkdirSync(this._filePath, { recursive: true });
-        }
-        fs.writeFileSync(
-            this._filePath + this._fileName,
+        const saveFile = new SaveFile(
+            this.filePath,
+            this.fileName,
             this.screenshot,
-            'base64',
         );
+        saveFile.execute();
     }
 
     private async assignFileName() {

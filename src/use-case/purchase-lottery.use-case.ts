@@ -1,14 +1,14 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Builder, By, WebDriver } from 'selenium-webdriver';
-import fs from 'fs';
 import * as process from 'process';
 import { WebDriverError } from 'selenium-webdriver/lib/error';
+import { SaveFile } from '../libs/utils/save-file';
 
 @Injectable()
 export class PurchaseLotteryUseCase {
     private logger = new Logger(PurchaseLotteryUseCase.name);
     private driver: WebDriver;
-    private filePath = `${__dirname}/../screenshots/`;
+    private filePath = `${__dirname}/../../screenshots/`;
     private fileName: string;
     private screenshot: string;
 
@@ -57,18 +57,12 @@ export class PurchaseLotteryUseCase {
                 this.logger.error(e);
             }
         } finally {
-            this.checkStorage();
-            fs.writeFileSync(
-                this.filePath + this.fileName,
+            const saveFile = new SaveFile(
+                this.filePath,
+                this.fileName,
                 this.screenshot,
-                'base64',
             );
-        }
-    }
-
-    private checkStorage() {
-        if (!fs.existsSync(this.filePath)) {
-            fs.mkdirSync(this.filePath, { recursive: true });
+            saveFile.execute();
         }
     }
 
