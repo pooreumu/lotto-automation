@@ -3,6 +3,7 @@ import { Builder, By, WebDriver } from 'selenium-webdriver';
 import * as process from 'process';
 import { WebDriverError } from 'selenium-webdriver/lib/error';
 import { SaveFile } from '../libs/utils/save-file';
+import { GameCount } from '../game-count';
 
 @Injectable()
 export class PurchaseLotteryUseCase {
@@ -12,7 +13,7 @@ export class PurchaseLotteryUseCase {
     private fileName: string;
     private screenshot: string;
 
-    async execute() {
+    async execute(gameCount: GameCount) {
         this.assignFileName();
         await this.assignDriver();
 
@@ -20,7 +21,7 @@ export class PurchaseLotteryUseCase {
         await this.login();
         await this.getPurchasePage();
         await this.switchToIframe();
-        await this.selectAutomaticNumber();
+        await this.selectAutomaticNumber(gameCount);
         await this.purchase();
         await this.approvePurchase();
         await this.saveResult();
@@ -82,11 +83,16 @@ export class PurchaseLotteryUseCase {
         await purchaseElement.click();
     }
 
-    private async selectAutomaticNumber() {
+    private async selectAutomaticNumber(count = 1) {
         const automaticNumberElement = await this.driver.findElement(
             By.id('num2'),
         );
         await automaticNumberElement.click();
+
+        const gameCountElement = await this.driver.findElement(
+            By.css(`option[value="${count}"]`),
+        );
+        await gameCountElement.click();
 
         const selectNumberElement = await this.driver.findElement(
             By.id('btnSelectNum'),
