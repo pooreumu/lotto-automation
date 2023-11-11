@@ -4,7 +4,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { ConfigModule } from '@nestjs/config';
 import { SlackUseCase } from './use-case/slack.use-case';
 import { AppService } from './app.service';
-import { GetWinResultLotteryUseCase } from './use-case/get-win-result-lottery.use-case';
+import { GetWinResultLotteryPuppeteerUseCase } from './use-case/get-win-result-lottery.puppeteer.use-case';
 
 @Module({
     imports: [ScheduleModule.forRoot(), ConfigModule.forRoot()],
@@ -12,7 +12,7 @@ import { GetWinResultLotteryUseCase } from './use-case/get-win-result-lottery.us
         PurchaseLotteryPuppeteerUseCase,
         SlackUseCase,
         AppService,
-        GetWinResultLotteryUseCase,
+        GetWinResultLotteryPuppeteerUseCase,
     ],
 })
 export class AppModule {}
