@@ -36,7 +36,7 @@ export class AppService {
     @Catch(AppService.name)
     @Cron('0 0 18 * * 1')
     async purchaseLotteryFiveGame() {
-        await this.purchaseLottery(GameCount.FIVE, process.env.MONDAY_MESSAGE);
+        await this.purchaseLottery(GameCount.FOUR, process.env.MONDAY_MESSAGE);
     }
 
     private async purchaseLottery(
