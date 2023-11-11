@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { PurchaseLotteryUseCase } from './use-case/purchase-lottery.use-case';
+import { PurchaseLotteryPuppeteerUseCase } from './use-case/purchase-lottery.puppeteer.use-case';
 import { SlackUseCase } from './use-case/slack.use-case';
 import { Cron } from '@nestjs/schedule';
 import { GetWinResultLotteryUseCase } from './use-case/get-win-result-lottery.use-case';
@@ -12,7 +12,7 @@ export class AppService {
     private readonly logger = new Logger(AppService.name);
     constructor(
         private readonly slackUseCase: SlackUseCase,
-        private readonly purchaseLotteryUseCase: PurchaseLotteryUseCase,
+        private readonly purchaseLotteryUseCase: PurchaseLotteryPuppeteerUseCase,
         private readonly getWinResultLotteryUseCase: GetWinResultLotteryUseCase,
     ) {}
 
@@ -49,5 +49,6 @@ export class AppService {
             this.purchaseLotteryUseCase.file,
             message,
         );
+        this.logger.log('purchaseLottery done');
     }
 }

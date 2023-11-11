@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
-
-import { PurchaseLotteryUseCase } from './use-case/purchase-lottery.use-case';
+import { PurchaseLotteryPuppeteerUseCase } from './use-case/purchase-lottery.puppeteer.use-case';
 import { ScheduleModule } from '@nestjs/schedule';
 import { ConfigModule } from '@nestjs/config';
 import { SlackUseCase } from './use-case/slack.use-case';
@@ -10,7 +9,7 @@ import { GetWinResultLotteryUseCase } from './use-case/get-win-result-lottery.us
 @Module({
     imports: [ScheduleModule.forRoot(), ConfigModule.forRoot()],
     providers: [
-        PurchaseLotteryUseCase,
+        PurchaseLotteryPuppeteerUseCase,
         SlackUseCase,
         AppService,
         GetWinResultLotteryUseCase,
