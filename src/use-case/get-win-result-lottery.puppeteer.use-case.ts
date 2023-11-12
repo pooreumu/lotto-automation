@@ -10,7 +10,7 @@ export class GetWinResultLotteryPuppeteerUseCase {
 
     async execute() {
         await this.launchBrowser();
-        await this.newPage();
+        await this.assignNewPage();
         await this.getWinResultPage();
         await this.takeScreenshot();
         await this.closeBrowser();
@@ -24,7 +24,7 @@ export class GetWinResultLotteryPuppeteerUseCase {
         this.browser = await puppeteer.launch({ headless: false });
     }
 
-    private async newPage() {
+    private async assignNewPage() {
         this.page = await this.browser.newPage();
     }
 
