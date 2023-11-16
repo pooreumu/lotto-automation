@@ -120,7 +120,7 @@ export class PurchaseLotteryPuppeteerUseCase {
         }
         try {
             await popupReceipt.screenshot({
-                path: `${this.filePath}/${this.fileName}.png`,
+                path: `${this.filePath}/${this.fileName}`,
             });
         } catch (e) {
             await this.page.screenshot({
