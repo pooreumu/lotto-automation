@@ -10,6 +10,11 @@ export class PurchaseLotteryPuppeteerUseCase {
     private frame: Frame;
     private filePath = `${__dirname}/../../screenshots/`;
     private fileName: string;
+    private _winningNumbers: string[];
+
+    public get winningNumbers(): string {
+        return JSON.stringify(this._winningNumbers);
+    }
 
     public get file(): string {
         return this.filePath + this.fileName;
@@ -35,6 +40,7 @@ export class PurchaseLotteryPuppeteerUseCase {
 
     private async login() {
         this.page = await this.browser.newPage();
+        await this.page.setViewport({ width: 1920, height: 1080 });
         await this.page.goto(
             'https://dhlottery.co.kr/user.do?method=login&returnUrl=',
         );
@@ -121,11 +127,27 @@ export class PurchaseLotteryPuppeteerUseCase {
         try {
             await popupReceipt.screenshot({
                 path: `${this.filePath}/${this.fileName}`,
+                fullPage: true,
             });
+            // #reportRow > li > div.nums
         } catch (e) {
             await this.page.screenshot({
                 path: `${this.filePath}/${this.fileName}`,
+                fullPage: true,
             });
+        }
+
+        const winningNumbers = await popupReceipt
+            .$eval('#reportRow > li > div.nums', (el) => el.textContent)
+            .then((winningNumbers) =>
+                winningNumbers
+                    ?.split(' ')
+                    .filter((num) => num !== '')
+                    .map((num) => num.trim()),
+            );
+
+        if (winningNumbers) {
+            this._winningNumbers = winningNumbers;
         }
     }
 
