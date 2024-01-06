@@ -41,13 +41,14 @@ export class AppService {
 
     private async purchaseLottery(
         gameCount: GameCount,
-        message = 'Here you are :four_leaf_clover:',
+        title = 'Here you are :four_leaf_clover:',
     ) {
         this.logger.log('purchaseLottery');
         await this.purchaseLotteryUseCase.execute(gameCount);
         await this.slackUseCase.sendNotification(
             this.purchaseLotteryUseCase.file,
-            message,
+            this.purchaseLotteryUseCase.winningNumbers,
+            title,
         );
         this.logger.log('purchaseLottery done');
     }

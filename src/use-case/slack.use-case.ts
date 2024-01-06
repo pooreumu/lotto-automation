@@ -14,10 +14,15 @@ export class SlackUseCase {
         });
     }
 
-    public async sendNotification(fileName: string, message: string) {
+    public async sendNotification(
+        fileName: string,
+        message: string,
+        title?: string,
+    ) {
         try {
             await this.client.files.upload({
                 channels: process.env.SLACK_CHANNEL_ID,
+                title: title,
                 initial_comment: message,
                 file: createReadStream(fileName),
             });
