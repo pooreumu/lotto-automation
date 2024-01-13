@@ -15,7 +15,7 @@ export class WinningNumbers {
     numbers: number[];
 
     @Column()
-    rounds: number;
+    round: number;
 
     @CreateDateColumn()
     createdAt: Date;
