@@ -1,5 +1,5 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { PurchaseLotteryPuppeteerUseCase } from './use-case/purchase-lottery.puppeteer.use-case';
+import { PurchaseLotteryPuppeteerUseCase } from './use-case/purchase-lottery.puppeteer-use-case';
 import { SlackUseCase } from './use-case/slack.use-case';
 import { Cron } from '@nestjs/schedule';
 import {
@@ -9,12 +9,14 @@ import {
 import { Catch } from './libs/decorator/catch';
 import { GameCount } from './game-count';
 import * as process from 'process';
+import { PURCHASE_LOTTERY_USE_CASE } from './use-case/purchase-lottery.use-case';
 
 @Injectable()
 export class AppService {
     private readonly logger = new Logger(AppService.name);
     constructor(
         private readonly slackUseCase: SlackUseCase,
+        @Inject(PURCHASE_LOTTERY_USE_CASE)
         private readonly purchaseLotteryUseCase: PurchaseLotteryPuppeteerUseCase,
         @Inject(GET_WIN_RESULT_LOTTERY_USE_CASE)
         private readonly getWinResultLotteryUseCase: GetWinResultLotteryUseCase,
