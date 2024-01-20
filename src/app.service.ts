@@ -28,15 +28,9 @@ export class AppService {
     }
 
     @Catch(AppService.name)
-    @Cron('0 0 18 * * 5')
-    async purchaseLotteryOneGame() {
-        await this.purchaseLottery(GameCount.ONE, process.env.FRIDAY_MESSAGE);
-    }
-
-    @Catch(AppService.name)
-    @Cron('0 0 18 * * 1')
+    @Cron('0 0 18 * * 1-5')
     async purchaseLotteryFiveGame() {
-        await this.purchaseLottery(GameCount.FOUR, process.env.MONDAY_MESSAGE);
+        await this.purchaseLottery(GameCount.ONE, process.env.MONDAY_MESSAGE);
     }
 
     private async purchaseLottery(
@@ -45,6 +39,7 @@ export class AppService {
     ) {
         this.logger.log('purchaseLottery');
         await this.purchaseLotteryUseCase.execute(gameCount);
+        this.logger.log(this.purchaseLotteryUseCase.winningNumbers);
         await this.slackUseCase.sendNotification(
             this.purchaseLotteryUseCase.file,
             this.purchaseLotteryUseCase.winningNumbers,
