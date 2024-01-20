@@ -13,10 +13,6 @@ export class PurchaseLotteryPuppeteerUseCase implements PurchaseLotteryUseCase {
     private fileName: string;
     private _winningNumbers: string[];
 
-    public get winningNumbers(): string {
-        return JSON.stringify(this._winningNumbers);
-    }
-
     public get file(): string {
         return this.filePath + this.fileName;
     }
@@ -33,6 +29,8 @@ export class PurchaseLotteryPuppeteerUseCase implements PurchaseLotteryUseCase {
         await this.saveResult();
 
         await this.closeBrowser();
+
+        return this._winningNumbers;
     }
 
     private async closeBrowser() {

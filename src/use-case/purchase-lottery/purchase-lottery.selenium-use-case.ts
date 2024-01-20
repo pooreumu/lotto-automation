@@ -4,10 +4,9 @@ import * as process from 'process';
 import { WebDriverError } from 'selenium-webdriver/lib/error';
 import { SaveFile } from '../../libs/utils/save-file';
 import { GameCount } from '../../game-count';
-import { PurchaseLotteryUseCase } from './purchase-lottery.use-case';
 
 @Injectable()
-export class PurchaseLotterySeleniumUseCase implements PurchaseLotteryUseCase {
+export class PurchaseLotterySeleniumUseCase {
     private logger = new Logger(PurchaseLotterySeleniumUseCase.name);
     private driver: WebDriver;
     private filePath = `${__dirname}/../../screenshots/`;

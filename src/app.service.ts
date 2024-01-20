@@ -44,11 +44,13 @@ export class AppService {
         title = 'Here you are :four_leaf_clover:',
     ) {
         this.logger.log('purchaseLottery');
-        await this.purchaseLotteryUseCase.execute(gameCount);
-        this.logger.log(this.purchaseLotteryUseCase.winningNumbers);
+        const winningNumbers = await this.purchaseLotteryUseCase.execute(
+            gameCount,
+        );
+        this.logger.log(winningNumbers);
         await this.slackUseCase.sendNotification(
             this.purchaseLotteryUseCase.file,
-            this.purchaseLotteryUseCase.winningNumbers,
+            JSON.stringify(winningNumbers),
             title,
         );
         this.logger.log('purchaseLottery done');
