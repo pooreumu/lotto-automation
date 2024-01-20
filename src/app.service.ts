@@ -1,8 +1,11 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { PurchaseLotteryPuppeteerUseCase } from './use-case/purchase-lottery.puppeteer.use-case';
 import { SlackUseCase } from './use-case/slack.use-case';
 import { Cron } from '@nestjs/schedule';
-import { GetWinResultLotteryPuppeteerUseCase } from './use-case/get-win-result-lottery.puppeteer.use-case';
+import {
+    GET_WIN_RESULT_LOTTERY_USE_CASE,
+    GetWinResultLotteryUseCase,
+} from './use-case/get-win-result-lottery.use-case';
 import { Catch } from './libs/decorator/catch';
 import { GameCount } from './game-count';
 import * as process from 'process';
@@ -13,7 +16,8 @@ export class AppService {
     constructor(
         private readonly slackUseCase: SlackUseCase,
         private readonly purchaseLotteryUseCase: PurchaseLotteryPuppeteerUseCase,
-        private readonly getWinResultLotteryUseCase: GetWinResultLotteryPuppeteerUseCase,
+        @Inject(GET_WIN_RESULT_LOTTERY_USE_CASE)
+        private readonly getWinResultLotteryUseCase: GetWinResultLotteryUseCase,
     ) {}
 
     @Catch(AppService.name)
