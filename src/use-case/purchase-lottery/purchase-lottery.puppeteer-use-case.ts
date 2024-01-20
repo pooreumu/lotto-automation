@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import puppeteer, { Browser, Frame, Page } from 'puppeteer';
 import * as process from 'process';
-import { GameCount } from '../game-count';
+import { GameCount } from '../../game-count';
 import { PurchaseLotteryUseCase } from './purchase-lottery.use-case';
 
 @Injectable()

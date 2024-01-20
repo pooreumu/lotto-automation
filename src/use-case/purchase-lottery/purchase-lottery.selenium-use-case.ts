@@ -2,8 +2,8 @@ import { Injectable, Logger } from '@nestjs/common';
 import { Builder, By, WebDriver } from 'selenium-webdriver';
 import * as process from 'process';
 import { WebDriverError } from 'selenium-webdriver/lib/error';
-import { SaveFile } from '../libs/utils/save-file';
-import { GameCount } from '../game-count';
+import { SaveFile } from '../../libs/utils/save-file';
+import { GameCount } from '../../game-count';
 import { PurchaseLotteryUseCase } from './purchase-lottery.use-case';
 
 @Injectable()

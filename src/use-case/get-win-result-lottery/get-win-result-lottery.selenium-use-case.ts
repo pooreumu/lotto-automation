@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Builder, By, WebDriver, WebElement } from 'selenium-webdriver';
-import { SaveFile } from '../libs/utils/save-file';
+import { SaveFile } from '../../libs/utils/save-file';
 import { GetWinResultLotteryUseCase } from './get-win-result-lottery.use-case';
 
 @Injectable()

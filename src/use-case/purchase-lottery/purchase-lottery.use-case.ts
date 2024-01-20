@@ -1,4 +1,4 @@
-import { GameCount } from '../game-count';
+import { GameCount } from '../../game-count';
 
 export interface PurchaseLotteryUseCase {
     file: string;
