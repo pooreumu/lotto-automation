@@ -1,21 +1,31 @@
 import { WinningNumbers } from 'src/entity/winning-numbers.entity';
 import { WinningNumbersRepository } from './winning-numbers.repository';
 import { Repository } from 'typeorm';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotImplementedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class WinningNumbersTypeormRepository
-    extends Repository<WinningNumbers>
     implements WinningNumbersRepository
 {
     constructor(
         @InjectRepository(WinningNumbers)
         private readonly repository: Repository<WinningNumbers>,
-    ) {
-        super(repository.target, repository.manager, repository.queryRunner);
+    ) {}
+
+    async getWinningNumbersList({
+        round,
+    }: {
+        round: number;
+    }): Promise<WinningNumbers[]> {
+        return await this.repository.find({
+            where: {
+                round,
+            },
+        });
     }
-    getWinningNumbers(): Promise<WinningNumbers> {
-        throw new Error('Method not implemented.');
+
+    save(winningNumbers: WinningNumbers): Promise<WinningNumbers> {
+        throw new NotImplementedException('Method not implemented.');
     }
 }
