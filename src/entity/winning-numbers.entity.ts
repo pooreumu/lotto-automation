@@ -39,4 +39,10 @@ export class WinningNumbers {
             throw new BadRequestException('numbers length must be 6');
         }
     }
+
+    public compareNumbers(numbers: number[]): number {
+        WinningNumbers.validateNumbers(numbers);
+
+        return this.numbers.filter((number) => numbers.includes(number)).length;
+    }
 }
