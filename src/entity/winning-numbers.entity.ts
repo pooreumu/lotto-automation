@@ -5,6 +5,7 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
+import { BadRequestException } from '@nestjs/common';
 
 @Entity()
 export class WinningNumbers {
@@ -22,4 +23,20 @@ export class WinningNumbers {
 
     @UpdateDateColumn()
     updatedAt: Date;
+
+    static of(params: { numbers: number[]; round: number }): WinningNumbers {
+        this.validateNumbers(params.numbers);
+
+        const winningNumbers = new WinningNumbers();
+        winningNumbers.numbers = params.numbers;
+        winningNumbers.round = params.round;
+
+        return winningNumbers;
+    }
+
+    private static validateNumbers(numbers: number[]) {
+        if (numbers.length !== 6) {
+            throw new BadRequestException('numbers length must be 6');
+        }
+    }
 }
