@@ -43,7 +43,7 @@ export class WinningNumbers {
         }
     }
 
-    public compareNumbers(numbers: number[]): number {
+    public getSameNumbersCount(numbers: number[]): number {
         WinningNumbers.validateNumbers(numbers);
 
         return this.numbers.filter((number) => numbers.includes(number)).length;
