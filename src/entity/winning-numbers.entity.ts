@@ -24,7 +24,10 @@ export class WinningNumbers {
     @UpdateDateColumn()
     updatedAt: Date;
 
-    static of(params: { numbers: number[]; round: number }): WinningNumbers {
+    public static of(params: {
+        numbers: number[];
+        round: number;
+    }): WinningNumbers {
         this.validateNumbers(params.numbers);
 
         const winningNumbers = new WinningNumbers();
