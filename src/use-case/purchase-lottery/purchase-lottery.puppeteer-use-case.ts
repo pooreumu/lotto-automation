@@ -3,15 +3,20 @@ import puppeteer, { Browser, Frame, Page } from 'puppeteer';
 import * as process from 'process';
 import { GameCount } from '../../game-count';
 import { PurchaseLotteryUseCase } from './purchase-lottery.use-case';
+import * as path from 'path';
 
 @Injectable()
 export class PurchaseLotteryPuppeteerUseCase implements PurchaseLotteryUseCase {
     private browser: Browser;
     private page: Page;
     private frame: Frame;
-    private filePath = `${__dirname}/../../screenshots/`;
+    private readonly filePath: string;
     private fileName: string;
     private _winningNumbers: string[];
+
+    constructor() {
+        this.filePath = path.resolve(process.cwd(), '/screenshots/');
+    }
 
     public get file(): string {
         return this.filePath + this.fileName;
@@ -136,6 +141,7 @@ export class PurchaseLotteryPuppeteerUseCase implements PurchaseLotteryUseCase {
             });
         }
 
+        console.log('popupReceipt', popupReceipt);
         const winningNumbers = await popupReceipt
             .$eval('#reportRow > li > div.nums', (el) => el.textContent)
             .then((winningNumbers) =>

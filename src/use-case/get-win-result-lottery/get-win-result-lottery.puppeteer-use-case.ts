@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import puppeteer, { Browser, Page } from 'puppeteer';
 import { GetWinResultLotteryUseCase } from './get-win-result-lottery.use-case';
+import * as path from 'path';
 
 @Injectable()
 export class GetWinResultLotteryPuppeteerUseCase
@@ -8,8 +9,12 @@ export class GetWinResultLotteryPuppeteerUseCase
 {
     private browser: Browser;
     private page: Page;
-    private filePath = `${__dirname}/../../screenshots/win-result/`;
+    private readonly filePath: string;
     private fileName: string;
+
+    constructor() {
+        this.filePath = path.resolve(process.cwd(), '/screenshots/win-result/');
+    }
 
     async execute() {
         await this.launchBrowser();
