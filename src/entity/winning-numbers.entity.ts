@@ -6,6 +6,7 @@ import {
     UpdateDateColumn,
 } from 'typeorm';
 import { BadRequestException } from '@nestjs/common';
+import { CompareWinningNumbersWithWinResultDto } from '../dto/compare-winning-numbers-with-win-result.dto';
 
 @Entity()
 export class WinningNumbers {
@@ -47,5 +48,15 @@ export class WinningNumbers {
         WinningNumbers.validateNumbers(numbers);
 
         return this.numbers.filter((number) => numbers.includes(number)).length;
+    }
+
+    public toCompareWinningNumbersWithWinResultDto(
+        numbers: number[],
+    ): CompareWinningNumbersWithWinResultDto {
+        return new CompareWinningNumbersWithWinResultDto(
+            this.round,
+            this.getSameNumbersCount(numbers),
+            this.createdAt,
+        );
     }
 }
