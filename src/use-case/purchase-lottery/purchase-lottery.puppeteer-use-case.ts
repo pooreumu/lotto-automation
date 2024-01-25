@@ -15,7 +15,7 @@ export class PurchaseLotteryPuppeteerUseCase implements PurchaseLotteryUseCase {
     private _winningNumbers: string[];
 
     constructor() {
-        this.filePath = path.resolve(process.cwd(), '/screenshots/');
+        this.filePath = path.join(process.cwd(), 'screenshots/');
     }
 
     public get file(): string {

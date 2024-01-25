@@ -13,7 +13,7 @@ export class GetWinResultLotteryPuppeteerUseCase
     private fileName: string;
 
     constructor() {
-        this.filePath = path.resolve(process.cwd(), '/screenshots/win-result/');
+        this.filePath = path.join(process.cwd(), 'screenshots/win-result/');
     }
 
     async execute() {
