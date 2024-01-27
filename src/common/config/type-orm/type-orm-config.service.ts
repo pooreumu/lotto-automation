@@ -19,7 +19,9 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
                   username: this.configService.get('DB_USERNAME'),
                   password: this.configService.get('DB_PASSWORD'),
                   database: this.configService.get('DB_DATABASE'),
-                  entities: [path.join(__dirname, `**/*.entity{.ts,.js}`)],
+                  entities: [
+                      path.join(__dirname, `../../../**/*.entity{.ts,.js}`),
+                  ],
                   synchronize: true,
                   namingStrategy: new SnakeNamingStrategy(),
               }
@@ -30,7 +32,9 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
                   username: this.configService.get('DB_USERNAME'),
                   password: this.configService.get('DB_PASSWORD'),
                   database: this.configService.get('DB_DATABASE'),
-                  entities: [path.join(__dirname, `**/*.entity{.ts,.js}`)],
+                  entities: [
+                      path.join(__dirname, `../../..**/*.entity{.ts,.js}`),
+                  ],
                   synchronize: false,
                   namingStrategy: new SnakeNamingStrategy(),
               };
