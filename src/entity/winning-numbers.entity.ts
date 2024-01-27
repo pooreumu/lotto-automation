@@ -13,7 +13,10 @@ export class WinningNumbers {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({
+        type: 'int',
+        array: true,
+    })
     numbers: number[];
 
     @Column()
