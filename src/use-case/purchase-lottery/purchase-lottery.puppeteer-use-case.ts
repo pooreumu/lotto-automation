@@ -4,6 +4,7 @@ import * as process from 'process';
 import { GameCount } from '../../game-count';
 import { PurchaseLotteryUseCase } from './purchase-lottery.use-case';
 import * as path from 'path';
+import { PurchaseLottery } from './purchase-lottery';
 
 @Injectable()
 export class PurchaseLotteryPuppeteerUseCase implements PurchaseLotteryUseCase {
@@ -13,6 +14,7 @@ export class PurchaseLotteryPuppeteerUseCase implements PurchaseLotteryUseCase {
     private readonly filePath: string;
     private fileName: string;
     private _winningNumbers: string[];
+    private _round: string;
 
     constructor() {
         this.filePath = path.join(process.cwd(), 'screenshots/');
@@ -35,7 +37,7 @@ export class PurchaseLotteryPuppeteerUseCase implements PurchaseLotteryUseCase {
 
         await this.closeBrowser();
 
-        return this._winningNumbers;
+        return new PurchaseLottery(this._winningNumbers, this._round);
     }
 
     private async closeBrowser() {
@@ -133,7 +135,6 @@ export class PurchaseLotteryPuppeteerUseCase implements PurchaseLotteryUseCase {
                 path: `${this.filePath}/${this.fileName}`,
                 fullPage: true,
             });
-            // #reportRow > li > div.nums
         } catch (e) {
             await this.page.screenshot({
                 path: `${this.filePath}/${this.fileName}`,
@@ -141,7 +142,6 @@ export class PurchaseLotteryPuppeteerUseCase implements PurchaseLotteryUseCase {
             });
         }
 
-        console.log('popupReceipt', popupReceipt);
         const winningNumbers = await popupReceipt
             .$eval('#reportRow > li > div.nums', (el) => el.textContent)
             .then((winningNumbers) =>
@@ -153,6 +153,14 @@ export class PurchaseLotteryPuppeteerUseCase implements PurchaseLotteryUseCase {
 
         if (winningNumbers) {
             this._winningNumbers = winningNumbers;
+        }
+
+        const round = await popupReceipt
+            .$eval('#buyRound', (el) => el.textContent)
+            .then((round) => round?.trim());
+
+        if (round) {
+            this._round = round;
         }
     }
 

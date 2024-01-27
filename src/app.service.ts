@@ -10,6 +10,7 @@ import { Catch } from './libs/decorator/catch';
 import { GameCount } from './game-count';
 import * as process from 'process';
 import { PURCHASE_LOTTERY_USE_CASE } from './use-case/purchase-lottery/purchase-lottery.use-case';
+import { SaveWinningNumbersUseCase } from './use-case/save-winning-numbers.use-case';
 
 @Injectable()
 export class AppService {
@@ -20,6 +21,7 @@ export class AppService {
         private readonly purchaseLotteryUseCase: PurchaseLotteryPuppeteerUseCase,
         @Inject(GET_WIN_RESULT_LOTTERY_USE_CASE)
         private readonly getWinResultLotteryUseCase: GetWinResultLotteryUseCase,
+        private readonly saveWinningNumbersUseCase: SaveWinningNumbersUseCase,
     ) {}
 
     @Catch(AppService.name)
@@ -44,13 +46,13 @@ export class AppService {
         title = 'Here you are :four_leaf_clover:',
     ) {
         this.logger.log('purchaseLottery');
-        const winningNumbers = await this.purchaseLotteryUseCase.execute(
+        const purchaseLottery = await this.purchaseLotteryUseCase.execute(
             gameCount,
         );
-        this.logger.log(winningNumbers);
+        await this.saveWinningNumbersUseCase.execute(purchaseLottery);
         await this.slackUseCase.sendNotification(
             this.purchaseLotteryUseCase.file,
-            JSON.stringify(winningNumbers),
+            JSON.stringify(purchaseLottery.winningNumbers),
             title,
         );
         this.logger.log('purchaseLottery done');

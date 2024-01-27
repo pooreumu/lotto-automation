@@ -10,6 +10,11 @@ import { PURCHASE_LOTTERY_USE_CASE } from './use-case/purchase-lottery/purchase-
 import { TypeOrmConfigModule } from './common/config/type-orm/type-orm-config.module';
 import * as process from 'process';
 import path from 'path';
+import { SaveWinningNumbersUseCase } from './use-case/save-winning-numbers.use-case';
+import { WINNING_NUMBERS_REPOSITORY } from './repository/winning-numbers.repository';
+import { WinningNumbersTypeormRepository } from './repository/winning-numbers.typeorm-repository';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Lottery } from './entity/lottery.entity';
 
 @Module({
     imports: [
@@ -22,6 +27,7 @@ import path from 'path';
                     : path.join(__dirname, '../.env'),
         }),
         TypeOrmConfigModule,
+        TypeOrmModule.forFeature([Lottery]),
     ],
     providers: [
         SlackUseCase,
@@ -33,6 +39,11 @@ import path from 'path';
         {
             provide: GET_WIN_RESULT_LOTTERY_USE_CASE,
             useClass: GetWinResultLotteryPuppeteerUseCase,
+        },
+        SaveWinningNumbersUseCase,
+        {
+            provide: WINNING_NUMBERS_REPOSITORY,
+            useClass: WinningNumbersTypeormRepository,
         },
     ],
 })
