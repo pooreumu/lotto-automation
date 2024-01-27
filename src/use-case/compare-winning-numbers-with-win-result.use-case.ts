@@ -3,7 +3,7 @@ import {
     WINNING_NUMBERS_REPOSITORY,
     WinningNumbersRepository,
 } from '../repository/winning-numbers.repository';
-import { WinningNumbers } from '../entity/winning-numbers.entity';
+import { Lottery } from '../entity/lottery.entity';
 import { CompareWinningNumbersWithWinResultDto } from '../dto/compare-winning-numbers-with-win-result.dto';
 
 @Injectable()
@@ -17,14 +17,12 @@ export class CompareWinningNumbersWithWinResultUseCase {
         round: number;
         winResult: number[];
     }): Promise<CompareWinningNumbersWithWinResultDto[]> {
-        const winningNumbersList: WinningNumbers[] =
+        const lotteries: Lottery[] =
             await this.winningNumbersRepository.getWinningNumbersList({
                 round: params.round,
             });
-        return winningNumbersList.map((winningNumbers: WinningNumbers) =>
-            winningNumbers.toCompareWinningNumbersWithWinResultDto(
-                params.winResult,
-            ),
+        return lotteries.map((lottery: Lottery) =>
+            lottery.toCompareWinningNumbersWithWinResultDto(params.winResult),
         );
     }
 }
