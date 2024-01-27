@@ -9,7 +9,7 @@ import { BadRequestException } from '@nestjs/common';
 import { CompareWinningNumbersWithWinResultDto } from '../dto/compare-winning-numbers-with-win-result.dto';
 
 @Entity()
-export class WinningNumbers {
+export class Lottery {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -17,7 +17,7 @@ export class WinningNumbers {
         type: 'int',
         array: true,
     })
-    numbers: number[];
+    winningNumbers: number[];
 
     @Column()
     round: number;
@@ -29,13 +29,13 @@ export class WinningNumbers {
     updatedAt: Date;
 
     public static of(params: {
-        numbers: number[];
+        winningNumbers: number[];
         round: number;
-    }): WinningNumbers {
-        this.validateNumbers(params.numbers);
+    }): Lottery {
+        this.validateNumbers(params.winningNumbers);
 
-        const winningNumbers = new WinningNumbers();
-        winningNumbers.numbers = params.numbers;
+        const winningNumbers = new Lottery();
+        winningNumbers.winningNumbers = params.winningNumbers;
         winningNumbers.round = params.round;
 
         return winningNumbers;
@@ -48,9 +48,10 @@ export class WinningNumbers {
     }
 
     public getSameNumbersCount(numbers: number[]): number {
-        WinningNumbers.validateNumbers(numbers);
+        Lottery.validateNumbers(numbers);
 
-        return this.numbers.filter((number) => numbers.includes(number)).length;
+        return this.winningNumbers.filter((number) => numbers.includes(number))
+            .length;
     }
 
     public toCompareWinningNumbersWithWinResultDto(

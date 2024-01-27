@@ -1,21 +1,21 @@
-import { WinningNumbers } from './winning-numbers.entity';
+import { Lottery } from './lottery.entity';
 import { BadRequestException } from '@nestjs/common';
 
-describe('WinningNumbers', () => {
+describe('Lottery', () => {
     describe('of', () => {
-        it('WinningNumbers의 당첨번호(numbers)는 반드시 6자리 입니다.', () => {
-            const winningNumbers = WinningNumbers.of({
-                numbers: [1, 2, 3, 4, 5, 6],
+        it('Lottery의 당첨번호(numbers)는 반드시 6자리 입니다.', () => {
+            const winningNumbers = Lottery.of({
+                winningNumbers: [1, 2, 3, 4, 5, 6],
                 round: 1090,
             });
 
-            expect(winningNumbers.numbers).toEqual([1, 2, 3, 4, 5, 6]);
+            expect(winningNumbers.winningNumbers).toEqual([1, 2, 3, 4, 5, 6]);
         });
 
-        it('WinningNumbers의 당첨번호(numbers)는 6자리 보다 클 수 없습니다.', () => {
+        it('Lottery의 당첨번호(numbers)는 6자리 보다 클 수 없습니다.', () => {
             const winningNumbers = () =>
-                WinningNumbers.of({
-                    numbers: [1, 2, 3, 4, 5, 6, 7],
+                Lottery.of({
+                    winningNumbers: [1, 2, 3, 4, 5, 6, 7],
                     round: 1090,
                 });
 
@@ -23,10 +23,10 @@ describe('WinningNumbers', () => {
             expect(winningNumbers).toThrowError('numbers length must be 6');
         });
 
-        it('WinningNumbers의 당첨번호(numbers)는 6자리 보다 작을 수 없습니다.', () => {
+        it('Lottery의 당첨번호(numbers)는 6자리 보다 작을 수 없습니다.', () => {
             const winningNumbers = () =>
-                WinningNumbers.of({
-                    numbers: [1, 2, 3, 4, 5],
+                Lottery.of({
+                    winningNumbers: [1, 2, 3, 4, 5],
                     round: 1090,
                 });
 
@@ -48,8 +48,8 @@ describe('WinningNumbers', () => {
         ])(
             '%s과 %s는 같은 숫자가 %개 입니다.',
             (standard: number[], target: number[], diffNumbersCount) => {
-                const winningNumbers = WinningNumbers.of({
-                    numbers: standard,
+                const winningNumbers = Lottery.of({
+                    winningNumbers: standard,
                     round: 1090,
                 });
 
