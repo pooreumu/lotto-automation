@@ -1,20 +1,21 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { PurchaseLotteryPuppeteerUseCase } from './use-case/purchase-lottery/purchase-lottery.puppeteer-use-case';
-import { SlackUseCase } from './use-case/slack.use-case';
+import { PurchaseLotteryPuppeteerUseCase } from '../use-case/purchase-lottery/purchase-lottery.puppeteer-use-case';
+import { SlackUseCase } from '../use-case/slack.use-case';
 import { Cron } from '@nestjs/schedule';
 import {
     GET_WIN_RESULT_LOTTERY_USE_CASE,
     GetWinResultLotteryUseCase,
-} from './use-case/get-win-result-lottery/get-win-result-lottery.use-case';
-import { Catch } from './libs/decorator/catch';
-import { GameCount } from './game-count';
+} from '../use-case/get-win-result-lottery/get-win-result-lottery.use-case';
+import { Catch } from '../libs/decorator/catch';
+import { GameCount } from '../game-count';
 import * as process from 'process';
-import { PURCHASE_LOTTERY_USE_CASE } from './use-case/purchase-lottery/purchase-lottery.use-case';
-import { SaveWinningNumbersUseCase } from './use-case/save-winning-numbers.use-case';
+import { PURCHASE_LOTTERY_USE_CASE } from '../use-case/purchase-lottery/purchase-lottery.use-case';
+import { SaveWinningNumbersUseCase } from '../use-case/save-winning-numbers.use-case';
 
 @Injectable()
-export class AppService {
-    private readonly logger = new Logger(AppService.name);
+export class LotteryService {
+    private readonly logger = new Logger(LotteryService.name);
+
     constructor(
         private readonly slackUseCase: SlackUseCase,
         @Inject(PURCHASE_LOTTERY_USE_CASE)
@@ -24,7 +25,7 @@ export class AppService {
         private readonly saveWinningNumbersUseCase: SaveWinningNumbersUseCase,
     ) {}
 
-    @Catch(AppService.name)
+    @Catch(LotteryService.name)
     @Cron('0 0 22 * * 6')
     async getWinResultLottery() {
         this.logger.log('getWinResultLottery');
@@ -35,7 +36,7 @@ export class AppService {
         );
     }
 
-    @Catch(AppService.name)
+    @Catch(LotteryService.name)
     @Cron('0 0 18 * * 1-5')
     async purchaseLotteryFiveGame() {
         await this.purchaseLottery(GameCount.ONE, process.env.MONDAY_MESSAGE);
