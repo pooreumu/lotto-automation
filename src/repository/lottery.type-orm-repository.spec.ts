@@ -6,15 +6,14 @@ import { AppModule } from '../app.module';
 
 describe('LotteryTypeOrmRepository', () => {
     let module: TestingModule;
-    let lotteryTypeOrmRepository: LotteryRepository;
+    let lotteryRepository: LotteryRepository;
     let dataSource: DataSource;
 
     beforeEach(async () => {
         module = await Test.createTestingModule({
             imports: [AppModule],
         }).compile();
-        lotteryTypeOrmRepository =
-            module.get<LotteryRepository>(LOTTERY_REPOSITORY);
+        lotteryRepository = module.get<LotteryRepository>(LOTTERY_REPOSITORY);
         dataSource = module.get<DataSource>(DataSource);
 
         await dataSource.synchronize(true);
@@ -31,7 +30,7 @@ describe('LotteryTypeOrmRepository', () => {
                 round: 1104,
             });
 
-            await lotteryTypeOrmRepository.save(lottery);
+            await lotteryRepository.save(lottery);
 
             const [lotteryFromDb] = await dataSource
                 .getRepository(Lottery)
@@ -46,7 +45,7 @@ describe('LotteryTypeOrmRepository', () => {
                 round: 1104,
             });
 
-            const result = await lotteryTypeOrmRepository.save(lottery);
+            const result = await lotteryRepository.save(lottery);
 
             expect(result).toBeInstanceOf(Lottery);
             expect(result.id).toBeDefined();

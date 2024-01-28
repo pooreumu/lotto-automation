@@ -9,7 +9,7 @@ import { GET_WIN_RESULT_LOTTERY_USE_CASE } from '../use-case/get-win-result-lott
 import { GetWinResultLotteryPuppeteerUseCase } from '../use-case/get-win-result-lottery/get-win-result-lottery.puppeteer-use-case';
 import { SaveWinningNumbersUseCase } from '../use-case/save-winning-numbers.use-case';
 import { LOTTERY_REPOSITORY } from '../repository/lottery.repository';
-import { LotteryTypeormRepository } from '../repository/lottery.typeorm-repository';
+import { LotteryTypeOrmRepository } from '../repository/lottery.type-orm-repository';
 
 @Module({
     imports: [TypeOrmModule.forFeature([Lottery])],
@@ -27,7 +27,7 @@ import { LotteryTypeormRepository } from '../repository/lottery.typeorm-reposito
         },
         {
             provide: LOTTERY_REPOSITORY,
-            useClass: LotteryTypeormRepository,
+            useClass: LotteryTypeOrmRepository,
         },
     ],
 })
