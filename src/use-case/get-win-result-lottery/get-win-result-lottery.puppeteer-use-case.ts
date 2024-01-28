@@ -22,7 +22,7 @@ export class GetWinResultLotteryPuppeteerUseCase
     async execute() {
         await this.launchBrowser();
         await this.assignNewPage();
-        await this.getWinResultPage();
+        await this.gotoWinResultPage();
         await this.takeScreenshot();
         await this.closeBrowser();
     }
@@ -43,7 +43,7 @@ export class GetWinResultLotteryPuppeteerUseCase
         await this.browser.close();
     }
 
-    private async getWinResultPage() {
+    private async gotoWinResultPage() {
         await this.page.goto(
             'https://dhlottery.co.kr/gameResult.do?method=byWin',
         );
