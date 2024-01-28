@@ -50,12 +50,14 @@ export class LotteryService {
         const purchaseLottery = await this.purchaseLotteryUseCase.execute(
             gameCount,
         );
-        await this.saveWinningNumbersUseCase.execute(purchaseLottery);
-        await this.slackUseCase.sendNotification(
-            this.purchaseLotteryUseCase.file,
-            JSON.stringify(purchaseLottery.winningNumbers),
-            title,
-        );
+        await Promise.all([
+            this.saveWinningNumbersUseCase.execute(purchaseLottery),
+            this.slackUseCase.sendNotification(
+                this.purchaseLotteryUseCase.file,
+                JSON.stringify(purchaseLottery.winningNumbers),
+                title,
+            ),
+        ]);
         this.logger.log('purchaseLottery done');
     }
 }
