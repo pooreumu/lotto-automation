@@ -1,21 +1,19 @@
 import { Inject, Injectable } from '@nestjs/common';
 import {
-    WINNING_NUMBERS_REPOSITORY,
-    WinningNumbersRepository,
-} from '../repository/winning-numbers.repository';
+    LOTTERY_REPOSITORY,
+    LotteryRepository,
+} from '../repository/lottery.repository';
 import { Lottery } from '../entity/lottery.entity';
 import { PurchaseLottery } from './purchase-lottery/purchase-lottery';
 
 @Injectable()
 export class SaveWinningNumbersUseCase {
     constructor(
-        @Inject(WINNING_NUMBERS_REPOSITORY)
-        private readonly winningNumbersRepository: WinningNumbersRepository,
+        @Inject(LOTTERY_REPOSITORY)
+        private readonly lotteryRepository: LotteryRepository,
     ) {}
 
     async execute(purchaseLottery: PurchaseLottery): Promise<Lottery> {
-        return await this.winningNumbersRepository.save(
-            purchaseLottery.toLottery(),
-        );
+        return await this.lotteryRepository.save(purchaseLottery.toLottery());
     }
 }

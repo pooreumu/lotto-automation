@@ -11,8 +11,8 @@ import { TypeOrmConfigModule } from './common/config/type-orm/type-orm-config.mo
 import * as process from 'process';
 import path from 'path';
 import { SaveWinningNumbersUseCase } from './use-case/save-winning-numbers.use-case';
-import { WINNING_NUMBERS_REPOSITORY } from './repository/winning-numbers.repository';
-import { WinningNumbersTypeormRepository } from './repository/winning-numbers.typeorm-repository';
+import { LOTTERY_REPOSITORY } from './repository/lottery.repository';
+import { LotteryTypeormRepository } from './repository/lottery.typeorm-repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Lottery } from './entity/lottery.entity';
 
@@ -42,8 +42,8 @@ import { Lottery } from './entity/lottery.entity';
         },
         SaveWinningNumbersUseCase,
         {
-            provide: WINNING_NUMBERS_REPOSITORY,
-            useClass: WinningNumbersTypeormRepository,
+            provide: LOTTERY_REPOSITORY,
+            useClass: LotteryTypeormRepository,
         },
     ],
 })

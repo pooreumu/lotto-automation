@@ -1,13 +1,11 @@
 import { Lottery } from 'src/entity/lottery.entity';
-import { WinningNumbersRepository } from './winning-numbers.repository';
+import { LotteryRepository } from './lottery.repository';
 import { Repository } from 'typeorm';
 import { Injectable, NotImplementedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
-export class WinningNumbersTypeormRepository
-    implements WinningNumbersRepository
-{
+export class LotteryTypeormRepository implements LotteryRepository {
     constructor(
         @InjectRepository(Lottery)
         private readonly repository: Repository<Lottery>,

@@ -1,16 +1,16 @@
 import { Inject, Injectable } from '@nestjs/common';
 import {
-    WINNING_NUMBERS_REPOSITORY,
-    WinningNumbersRepository,
-} from '../repository/winning-numbers.repository';
+    LOTTERY_REPOSITORY,
+    LotteryRepository,
+} from '../repository/lottery.repository';
 import { Lottery } from '../entity/lottery.entity';
 import { CompareWinningNumbersWithWinResultDto } from '../dto/compare-winning-numbers-with-win-result.dto';
 
 @Injectable()
 export class CompareWinningNumbersWithWinResultUseCase {
     constructor(
-        @Inject(WINNING_NUMBERS_REPOSITORY)
-        private readonly winningNumbersRepository: WinningNumbersRepository,
+        @Inject(LOTTERY_REPOSITORY)
+        private readonly lotteryRepository: LotteryRepository,
     ) {}
 
     async execute(params: {
@@ -18,7 +18,7 @@ export class CompareWinningNumbersWithWinResultUseCase {
         winResult: number[];
     }): Promise<CompareWinningNumbersWithWinResultDto[]> {
         const lotteries: Lottery[] =
-            await this.winningNumbersRepository.getWinningNumbersList({
+            await this.lotteryRepository.getWinningNumbersList({
                 round: params.round,
             });
         return lotteries.map((lottery: Lottery) =>
