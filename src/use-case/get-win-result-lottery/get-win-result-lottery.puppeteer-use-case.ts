@@ -1,7 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import puppeteer, { Browser, Page } from 'puppeteer';
-import { GetWinResultLotteryUseCase } from './get-win-result-lottery.use-case';
 import * as path from 'path';
+
+import { Injectable } from '@nestjs/common';
+
+import puppeteer, { Browser, Page } from 'puppeteer';
+
+import { GetWinResultLotteryUseCase } from './get-win-result-lottery.use-case';
 
 @Injectable()
 export class GetWinResultLotteryPuppeteerUseCase

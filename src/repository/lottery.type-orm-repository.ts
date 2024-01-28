@@ -1,8 +1,11 @@
-import { LotteryRepository } from './lottery.repository';
-import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+
+import { Repository } from 'typeorm';
+
 import { Lottery } from '../entity/lottery.entity';
+
+import { LotteryRepository } from './lottery.repository';
 
 @Injectable()
 export class LotteryTypeOrmRepository implements LotteryRepository {

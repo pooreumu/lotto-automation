@@ -1,5 +1,6 @@
-import { Enum, EnumType } from 'ts-jenum';
 import { BadRequestException } from '@nestjs/common';
+
+import { Enum, EnumType } from 'ts-jenum';
 
 @Enum('code')
 export class ERank extends EnumType<ERank>() {

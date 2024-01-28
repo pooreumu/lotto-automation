@@ -1,3 +1,5 @@
+import { BadRequestException } from '@nestjs/common';
+
 import {
     Column,
     CreateDateColumn,
@@ -5,7 +7,7 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
-import { BadRequestException } from '@nestjs/common';
+
 import { CompareWinningNumbersWithWinResultDto } from '../dto/compare-winning-numbers-with-win-result.dto';
 
 @Entity()

@@ -1,4 +1,5 @@
 import { GameCount } from '../../domain/game-count';
+
 import { PurchaseLottery } from './purchase-lottery';
 
 export interface PurchaseLotteryUseCase {

@@ -1,10 +1,14 @@
-import { Injectable } from '@nestjs/common';
-import puppeteer, { Browser, Frame, Page } from 'puppeteer';
-import * as process from 'process';
-import { GameCount } from '../../domain/game-count';
-import { PurchaseLotteryUseCase } from './purchase-lottery.use-case';
 import * as path from 'path';
+import * as process from 'process';
+
+import { Injectable } from '@nestjs/common';
+
+import puppeteer, { Browser, Frame, Page } from 'puppeteer';
+
+import { GameCount } from '../../domain/game-count';
+
 import { PurchaseLottery } from './purchase-lottery';
+import { PurchaseLotteryUseCase } from './purchase-lottery.use-case';
 
 @Injectable()
 export class PurchaseLotteryPuppeteerUseCase implements PurchaseLotteryUseCase {

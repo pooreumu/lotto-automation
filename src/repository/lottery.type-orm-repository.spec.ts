@@ -1,8 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
+
 import { DataSource } from 'typeorm';
-import { Lottery } from '../entity/lottery.entity';
-import { LOTTERY_REPOSITORY, LotteryRepository } from './lottery.repository';
+
 import { AppModule } from '../app.module';
+import { Lottery } from '../entity/lottery.entity';
+
+import { LOTTERY_REPOSITORY, LotteryRepository } from './lottery.repository';
 
 describe('LotteryTypeOrmRepository', () => {
     let module: TestingModule;

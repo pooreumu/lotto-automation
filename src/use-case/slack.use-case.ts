@@ -1,7 +1,9 @@
-import { LogLevel, WebClient } from '@slack/web-api';
-import { Injectable, Logger } from '@nestjs/common';
 import { createReadStream } from 'fs';
 import * as process from 'process';
+
+import { Injectable, Logger } from '@nestjs/common';
+
+import { LogLevel, WebClient } from '@slack/web-api';
 
 @Injectable()
 export class SlackUseCase {

@@ -1,9 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
+
+import { Lottery } from '../entity/lottery.entity';
 import {
     LOTTERY_REPOSITORY,
     LotteryRepository,
 } from '../repository/lottery.repository';
-import { Lottery } from '../entity/lottery.entity';
+
 import { PurchaseLottery } from './purchase-lottery/purchase-lottery';
 
 @Injectable()

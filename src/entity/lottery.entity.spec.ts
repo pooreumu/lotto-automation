@@ -1,5 +1,6 @@
-import { Lottery } from './lottery.entity';
 import { BadRequestException } from '@nestjs/common';
+
+import { Lottery } from './lottery.entity';
 
 describe('Lottery', () => {
     describe('of', () => {

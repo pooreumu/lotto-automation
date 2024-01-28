@@ -1,9 +1,12 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { Builder, By, WebDriver } from 'selenium-webdriver';
 import * as process from 'process';
+
+import { Injectable, Logger } from '@nestjs/common';
+
+import { Builder, By, WebDriver } from 'selenium-webdriver';
 import { WebDriverError } from 'selenium-webdriver/lib/error';
-import { SaveFile } from '../../libs/utils/save-file';
+
 import { GameCount } from '../../domain/game-count';
+import { SaveFile } from '../../libs/utils/save-file';
 
 @Injectable()
 export class PurchaseLotterySeleniumUseCase {

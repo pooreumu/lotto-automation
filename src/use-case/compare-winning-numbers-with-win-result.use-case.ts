@@ -1,10 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
+
+import { CompareWinningNumbersWithWinResultDto } from '../dto/compare-winning-numbers-with-win-result.dto';
+import { Lottery } from '../entity/lottery.entity';
 import {
     LOTTERY_REPOSITORY,
     LotteryRepository,
 } from '../repository/lottery.repository';
-import { Lottery } from '../entity/lottery.entity';
-import { CompareWinningNumbersWithWinResultDto } from '../dto/compare-winning-numbers-with-win-result.dto';
 
 @Injectable()
 export class CompareWinningNumbersWithWinResultUseCase {

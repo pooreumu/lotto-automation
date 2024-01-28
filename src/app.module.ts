@@ -1,9 +1,11 @@
-import { Module } from '@nestjs/common';
-import { ScheduleModule } from '@nestjs/schedule';
-import { ConfigModule } from '@nestjs/config';
-import { TypeOrmConfigModule } from './common/config/type-orm/type-orm-config.module';
-import * as process from 'process';
 import path from 'path';
+import * as process from 'process';
+
+import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { ScheduleModule } from '@nestjs/schedule';
+
+import { TypeOrmConfigModule } from './common/config/type-orm/type-orm-config.module';
 import { LotteryModule } from './module/lottery.module';
 
 @Module({
