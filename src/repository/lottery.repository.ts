@@ -1,7 +1,7 @@
 import { Lottery } from '../entity/lottery.entity';
 
 export interface LotteryRepository {
-    getWinningNumbersList(params: { round: number }): Promise<Lottery[]>;
+    findBy(params: { round: number }): Promise<Lottery[]>;
     save(winningNumbers: Lottery): Promise<Lottery>;
 }
 

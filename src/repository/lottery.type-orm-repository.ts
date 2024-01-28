@@ -11,11 +11,7 @@ export class LotteryTypeOrmRepository implements LotteryRepository {
         private readonly repository: Repository<Lottery>,
     ) {}
 
-    async getWinningNumbersList({
-        round,
-    }: {
-        round: number;
-    }): Promise<Lottery[]> {
+    async findBy({ round }: { round: number }): Promise<Lottery[]> {
         return await this.repository.find({
             where: {
                 round,

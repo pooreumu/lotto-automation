@@ -17,10 +17,9 @@ export class CompareWinningNumbersWithWinResultUseCase {
         round: number;
         winResult: number[];
     }): Promise<CompareWinningNumbersWithWinResultDto[]> {
-        const lotteries: Lottery[] =
-            await this.lotteryRepository.getWinningNumbersList({
-                round: params.round,
-            });
+        const lotteries: Lottery[] = await this.lotteryRepository.findBy({
+            round: params.round,
+        });
         return lotteries.map((lottery: Lottery) =>
             lottery.toCompareWinningNumbersWithWinResultDto(params.winResult),
         );
