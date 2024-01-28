@@ -1,8 +1,8 @@
-import { Lottery } from 'src/entity/lottery.entity';
 import { LotteryRepository } from './lottery.repository';
 import { Repository } from 'typeorm';
-import { Injectable, NotImplementedException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Lottery } from '../entity/lottery.entity';
 
 @Injectable()
 export class LotteryTypeormRepository implements LotteryRepository {
@@ -23,7 +23,7 @@ export class LotteryTypeormRepository implements LotteryRepository {
         });
     }
 
-    save(winningNumbers: Lottery): Promise<Lottery> {
-        throw new NotImplementedException('Method not implemented.');
+    async save(lottery: Lottery): Promise<Lottery> {
+        return await this.repository.save(lottery);
     }
 }
