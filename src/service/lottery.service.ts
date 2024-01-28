@@ -7,7 +7,7 @@ import {
     GetWinResultLotteryUseCase,
 } from '../use-case/get-win-result-lottery/get-win-result-lottery.use-case';
 import { Catch } from '../libs/decorator/catch';
-import { GameCount } from '../game-count';
+import { GameCount } from '../domain/game-count';
 import * as process from 'process';
 import { PURCHASE_LOTTERY_USE_CASE } from '../use-case/purchase-lottery/purchase-lottery.use-case';
 import { SaveWinningNumbersUseCase } from '../use-case/save-winning-numbers.use-case';

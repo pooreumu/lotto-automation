@@ -3,7 +3,7 @@ import { Builder, By, WebDriver } from 'selenium-webdriver';
 import * as process from 'process';
 import { WebDriverError } from 'selenium-webdriver/lib/error';
 import { SaveFile } from '../../libs/utils/save-file';
-import { GameCount } from '../../game-count';
+import { GameCount } from '../../domain/game-count';
 
 @Injectable()
 export class PurchaseLotterySeleniumUseCase {
