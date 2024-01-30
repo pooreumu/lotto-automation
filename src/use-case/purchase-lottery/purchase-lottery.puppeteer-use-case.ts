@@ -161,7 +161,10 @@ export class PurchaseLotteryPuppeteerUseCase implements PurchaseLotteryUseCase {
 
         const round = await popupReceipt
             .$eval('#buyRound', (el) => el.textContent)
-            .then((round) => round?.trim());
+            .then((round) => {
+                const match = round?.trim().match(/\d+/);
+                return match ? match[0] : null;
+            });
 
         if (round) {
             this._round = round;
