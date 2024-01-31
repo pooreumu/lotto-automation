@@ -4,12 +4,8 @@ import { Builder, By, WebDriver, WebElement } from 'selenium-webdriver';
 
 import { SaveFile } from '../../libs/utils/save-file';
 
-import { GetWinResultLotteryUseCase } from './get-win-result-lottery.use-case';
-
 @Injectable()
-export class GetWinResultLotterySeleniumUseCase
-    implements GetWinResultLotteryUseCase
-{
+export class GetWinResultLotterySeleniumUseCase {
     private driver: WebDriver;
     private winResultElement: WebElement;
     private filePath = `${__dirname}/../../screenshots/win-result/`;
