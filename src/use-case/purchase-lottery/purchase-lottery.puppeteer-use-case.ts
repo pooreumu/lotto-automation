@@ -3,7 +3,13 @@ import * as process from 'process';
 
 import { Injectable } from '@nestjs/common';
 
-import puppeteer, { Browser, Frame, Page } from 'puppeteer';
+import puppeteer, {
+    Browser,
+    ElementHandle,
+    Frame,
+    NodeFor,
+    Page,
+} from 'puppeteer';
 
 import { GameCount } from '../../domain/game-count';
 
@@ -131,21 +137,47 @@ export class PurchaseLotteryPuppeteerUseCase implements PurchaseLotteryUseCase {
 
     private async saveResult() {
         const popupReceipt = await this.frame.$('#popReceipt');
-        if (!popupReceipt) {
-            throw new Error('popupReceipt not found');
-        }
-        try {
-            await popupReceipt.screenshot({
-                path: `${this.filePath}/${this.fileName}`,
-                fullPage: true,
-            });
-        } catch (e) {
+        if (popupReceipt) {
+            await Promise.all([
+                this.getScreenshot(popupReceipt),
+                this.assignWinningNumbers(popupReceipt),
+                this.assignRound(popupReceipt),
+            ]);
+        } else {
             await this.page.screenshot({
                 path: `${this.filePath}/${this.fileName}`,
                 fullPage: true,
             });
         }
+    }
 
+    private async getScreenshot(
+        popupReceipt: ElementHandle<NodeFor<'#popReceipt'>>,
+    ) {
+        await popupReceipt.screenshot({
+            path: `${this.filePath}/${this.fileName}`,
+            fullPage: true,
+        });
+    }
+
+    private async assignRound(
+        popupReceipt: ElementHandle<NodeFor<'#popReceipt'>>,
+    ) {
+        const round = await popupReceipt
+            .$eval('#buyRound', (el) => el.textContent)
+            .then((round) => {
+                const match = round?.trim().match(/\d+/);
+                return match ? match[0] : null;
+            });
+
+        if (round) {
+            this._round = round;
+        }
+    }
+
+    private async assignWinningNumbers(
+        popupReceipt: ElementHandle<NodeFor<'#popReceipt'>>,
+    ) {
         const winningNumbers = await popupReceipt
             .$eval('#reportRow > li > div.nums', (el) => el.textContent)
             .then((winningNumbers) =>
@@ -157,17 +189,6 @@ export class PurchaseLotteryPuppeteerUseCase implements PurchaseLotteryUseCase {
 
         if (winningNumbers) {
             this._winningNumbers = winningNumbers;
-        }
-
-        const round = await popupReceipt
-            .$eval('#buyRound', (el) => el.textContent)
-            .then((round) => {
-                const match = round?.trim().match(/\d+/);
-                return match ? match[0] : null;
-            });
-
-        if (round) {
-            this._round = round;
         }
     }
 
