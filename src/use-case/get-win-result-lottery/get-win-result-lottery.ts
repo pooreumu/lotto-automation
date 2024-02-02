@@ -1,9 +1,9 @@
 export class GetWinResultLottery {
-    readonly round: string;
-    readonly ballNumbers: string[];
-    readonly bonus: string;
+    readonly round: number;
+    readonly ballNumbers: number[];
+    readonly bonus: number;
 
-    constructor(round: string, ballNumbers: string[], bonus: string) {
+    constructor(round: number, ballNumbers: number[], bonus: number) {
         this.round = round;
         this.ballNumbers = ballNumbers;
         this.bonus = bonus;

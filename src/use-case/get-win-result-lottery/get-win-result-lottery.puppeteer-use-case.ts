@@ -15,9 +15,9 @@ export class GetWinResultLotteryPuppeteerUseCase
     private page: Page;
     private readonly filePath: string;
     private fileName: string;
-    private round: string;
-    private ballNumbers: string[];
-    private bonusNumber: string;
+    private round: number;
+    private ballNumbers: number[];
+    private bonusNumber: number;
 
     constructor() {
         this.filePath = path.join(process.cwd(), 'screenshots/win-result/');
@@ -93,7 +93,7 @@ export class GetWinResultLotteryPuppeteerUseCase
                 if (!ballNumber) {
                     throw new Error('ballNumber is null');
                 }
-                return ballNumber;
+                return +ballNumber;
             }),
         );
     }
@@ -108,7 +108,7 @@ export class GetWinResultLotteryPuppeteerUseCase
                 if (!bonusNumber) {
                     throw new Error('bonusNumber is null');
                 }
-                return bonusNumber;
+                return +bonusNumber;
             });
     }
 
@@ -123,7 +123,7 @@ export class GetWinResultLotteryPuppeteerUseCase
                 if (!round) {
                     throw new Error('round is null');
                 }
-                return round;
+                return +round;
             });
     }
 }
