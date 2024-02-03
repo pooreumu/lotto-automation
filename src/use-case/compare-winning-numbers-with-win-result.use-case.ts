@@ -7,6 +7,8 @@ import {
     LotteryRepository,
 } from '../repository/lottery.repository';
 
+import { GetWinResultLottery } from './get-win-result-lottery/get-win-result-lottery';
+
 @Injectable()
 export class CompareWinningNumbersWithWinResultUseCase {
     constructor(
@@ -14,15 +16,14 @@ export class CompareWinningNumbersWithWinResultUseCase {
         private readonly lotteryRepository: LotteryRepository,
     ) {}
 
-    async execute(params: {
-        round: number;
-        winResult: number[];
-    }): Promise<CompareWinningNumbersWithWinResultDto[]> {
+    async execute(
+        winResultLottery: GetWinResultLottery,
+    ): Promise<CompareWinningNumbersWithWinResultDto[]> {
         const lotteries: Lottery[] = await this.lotteryRepository.findBy({
-            round: params.round,
+            round: winResultLottery.round,
         });
         return lotteries.map((lottery: Lottery) =>
-            lottery.toCompareWinningNumbersWithWinResultDto(params.winResult),
+            lottery.toCompareWinningNumbersWithWinResultDto(winResultLottery),
         );
     }
 }

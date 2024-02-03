@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 
 import { CompareWinningNumbersWithWinResultDto } from '../dto/compare-winning-numbers-with-win-result.dto';
+import { GetWinResultLottery } from '../use-case/get-win-result-lottery/get-win-result-lottery';
 
 @Entity()
 export class Lottery {
@@ -50,18 +51,17 @@ export class Lottery {
     }
 
     public getSameNumbersCount(numbers: number[]): number {
-        Lottery.validateNumbers(numbers);
-
         return this.winningNumbers.filter((number) => numbers.includes(number))
             .length;
     }
 
     public toCompareWinningNumbersWithWinResultDto(
-        numbers: number[],
+        winResultLottery: GetWinResultLottery,
     ): CompareWinningNumbersWithWinResultDto {
         return new CompareWinningNumbersWithWinResultDto(
             this.round,
-            this.getSameNumbersCount(numbers),
+            this.getSameNumbersCount(winResultLottery.ballNumbers),
+            this.getSameNumbersCount([winResultLottery.bonus]),
             this.createdAt,
         );
     }
