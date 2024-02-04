@@ -3,6 +3,6 @@ export class CompareWinningNumbersWithWinResultDto {
         readonly round: number,
         readonly matchingGeneralNumberCount: number,
         readonly matchingBonusNumberCount: number,
-        readonly createdAt: Date,
+        readonly winningNumbers: number[],
     ) {}
 }

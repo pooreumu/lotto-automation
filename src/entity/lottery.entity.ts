@@ -62,7 +62,7 @@ export class Lottery {
             this.round,
             this.getSameNumbersCount(winResultLottery.ballNumbers),
             this.getSameNumbersCount([winResultLottery.bonus]),
-            this.createdAt,
+            this.winningNumbers,
         );
     }
 }

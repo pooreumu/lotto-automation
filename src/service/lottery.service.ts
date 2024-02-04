@@ -41,23 +41,22 @@ export class LotteryService {
             await this.compareWinningNumbersWithWinResultUseCase.execute(
                 winResultLottery,
             );
-        const ranks = comparisonResults.map((comparisonResult) =>
-            ERank.getRank(
-                comparisonResult.matchingGeneralNumberCount,
-                comparisonResult.matchingBonusNumberCount,
-            ),
-        );
+        const ranks = comparisonResults
+            .map((comparisonResult) => {
+                const rank = ERank.getRank(
+                    comparisonResult.matchingGeneralNumberCount,
+                    comparisonResult.matchingBonusNumberCount,
+                );
+                return `
+등수: ${rank.name}
+상금: ${rank.prize}
+번호: ${comparisonResult.winningNumbers}`;
+            })
+            .join('\n');
 
         await this.slackUseCase.sendNotification(
             this.getWinResultLotteryUseCase.file,
-            JSON.stringify(
-                ranks.map((rank) => {
-                    return {
-                        등수: rank.name,
-                        상금: rank.prize,
-                    };
-                }),
-            ),
+            ranks,
             'WINNER WINNER CHICKEN DINNER :trophy:',
         );
     }
