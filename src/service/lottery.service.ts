@@ -4,7 +4,6 @@ import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 
 import { GameCount } from '../domain/game-count';
-import { ERank } from '../domain/rank';
 import { Catch } from '../libs/decorator/catch';
 import { CompareWinningNumbersWithWinResultUseCase } from '../use-case/compare-winning-numbers-with-win-result/compare-winning-numbers-with-win-result.use-case';
 import { GetWinResultLottery } from '../use-case/get-win-result-lottery/get-win-result-lottery';
@@ -41,22 +40,13 @@ export class LotteryService {
             await this.compareWinningNumbersWithWinResultUseCase.execute(
                 winResultLottery,
             );
-        const ranks = comparisonResults
-            .map((comparisonResult) => {
-                const rank = ERank.getRank(
-                    comparisonResult.matchingGeneralNumberCount,
-                    comparisonResult.matchingBonusNumberCount,
-                );
-                return `
-등수: ${rank.name}
-상금: ${rank.prize}
-번호: ${comparisonResult.winningNumbers}`;
-            })
+        const message = comparisonResults
+            .map((comparisonResult) => comparisonResult.toSlackMessage())
             .join('\n');
 
         await this.slackUseCase.sendNotification(
             this.getWinResultLotteryUseCase.file,
-            ranks,
+            message,
             'WINNER WINNER CHICKEN DINNER :trophy:',
         );
     }
