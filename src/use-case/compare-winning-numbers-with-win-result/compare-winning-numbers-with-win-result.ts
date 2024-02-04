@@ -1,4 +1,4 @@
-export class CompareWinningNumbersWithWinResultDto {
+export class CompareWinningNumbersWithWinResult {
     constructor(
         readonly round: number,
         readonly matchingGeneralNumberCount: number,

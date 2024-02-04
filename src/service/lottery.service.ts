@@ -6,7 +6,7 @@ import { Cron } from '@nestjs/schedule';
 import { GameCount } from '../domain/game-count';
 import { ERank } from '../domain/rank';
 import { Catch } from '../libs/decorator/catch';
-import { CompareWinningNumbersWithWinResultUseCase } from '../use-case/compare-winning-numbers-with-win-result.use-case';
+import { CompareWinningNumbersWithWinResultUseCase } from '../use-case/compare-winning-numbers-with-win-result/compare-winning-numbers-with-win-result.use-case';
 import { GetWinResultLottery } from '../use-case/get-win-result-lottery/get-win-result-lottery';
 import {
     GET_WIN_RESULT_LOTTERY_USE_CASE,

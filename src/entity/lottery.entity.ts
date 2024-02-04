@@ -8,7 +8,7 @@ import {
     UpdateDateColumn,
 } from 'typeorm';
 
-import { CompareWinningNumbersWithWinResultDto } from '../dto/compare-winning-numbers-with-win-result.dto';
+import { CompareWinningNumbersWithWinResult } from '../use-case/compare-winning-numbers-with-win-result/compare-winning-numbers-with-win-result';
 import { GetWinResultLottery } from '../use-case/get-win-result-lottery/get-win-result-lottery';
 
 @Entity()
@@ -57,8 +57,8 @@ export class Lottery {
 
     public toCompareWinningNumbersWithWinResultDto(
         winResultLottery: GetWinResultLottery,
-    ): CompareWinningNumbersWithWinResultDto {
-        return new CompareWinningNumbersWithWinResultDto(
+    ): CompareWinningNumbersWithWinResult {
+        return new CompareWinningNumbersWithWinResult(
             this.round,
             this.getSameNumbersCount(winResultLottery.ballNumbers),
             this.getSameNumbersCount([winResultLottery.bonus]),

@@ -1,13 +1,13 @@
 import { Inject, Injectable } from '@nestjs/common';
 
-import { CompareWinningNumbersWithWinResultDto } from '../dto/compare-winning-numbers-with-win-result.dto';
-import { Lottery } from '../entity/lottery.entity';
+import { Lottery } from '../../entity/lottery.entity';
 import {
     LOTTERY_REPOSITORY,
     LotteryRepository,
-} from '../repository/lottery.repository';
+} from '../../repository/lottery.repository';
+import { GetWinResultLottery } from '../get-win-result-lottery/get-win-result-lottery';
 
-import { GetWinResultLottery } from './get-win-result-lottery/get-win-result-lottery';
+import { CompareWinningNumbersWithWinResult } from './compare-winning-numbers-with-win-result';
 
 @Injectable()
 export class CompareWinningNumbersWithWinResultUseCase {
@@ -18,7 +18,7 @@ export class CompareWinningNumbersWithWinResultUseCase {
 
     async execute(
         winResultLottery: GetWinResultLottery,
-    ): Promise<CompareWinningNumbersWithWinResultDto[]> {
+    ): Promise<CompareWinningNumbersWithWinResult[]> {
         const lotteries: Lottery[] = await this.lotteryRepository.findBy({
             round: winResultLottery.round,
         });
