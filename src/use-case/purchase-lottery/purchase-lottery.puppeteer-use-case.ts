@@ -156,7 +156,6 @@ export class PurchaseLotteryPuppeteerUseCase implements PurchaseLotteryUseCase {
     ) {
         await popupReceipt.screenshot({
             path: `${this.filePath}/${this.fileName}`,
-            fullPage: true,
         });
     }
 
