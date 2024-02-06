@@ -138,11 +138,9 @@ export class PurchaseLotteryPuppeteerUseCase implements PurchaseLotteryUseCase {
     private async saveResult() {
         const popupReceipt = await this.frame.$('#popReceipt');
         if (popupReceipt) {
-            await Promise.all([
-                this.getScreenshot(popupReceipt),
-                this.assignWinningNumbers(popupReceipt),
-                this.assignRound(popupReceipt),
-            ]);
+            await this.getScreenshot(popupReceipt);
+            await this.assignWinningNumbers(popupReceipt);
+            await this.assignRound(popupReceipt);
         } else {
             await this.page.screenshot({
                 path: `${this.filePath}/${this.fileName}`,
