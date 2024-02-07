@@ -74,19 +74,21 @@ export class PurchaseLotteryPuppeteerUseCase implements PurchaseLotteryUseCase {
     }
 
     private async selectAutomaticNumber(gameCount: GameCount) {
-        const automaticNumberButton = await this.frame.$('#num2');
+        const automaticNumberButton = await this.frame.waitForSelector('#num2');
         if (!automaticNumberButton) {
             throw new Error('automaticNumberButton not found');
         }
         await automaticNumberButton.click();
 
-        const selectElement = await this.frame.$('#amoundApply');
+        const selectElement = await this.frame.waitForSelector('#amoundApply');
         if (!selectElement) {
             throw new Error('selectElement not found');
         }
         await selectElement.select(`${gameCount}`);
 
-        const selectNumberButton = await this.frame.$('#btnSelectNum');
+        const selectNumberButton = await this.frame.waitForSelector(
+            '#btnSelectNum',
+        );
         if (!selectNumberButton) {
             throw new Error('selectNumberButton not found');
         }
@@ -94,7 +96,9 @@ export class PurchaseLotteryPuppeteerUseCase implements PurchaseLotteryUseCase {
     }
 
     private async assignFrame() {
-        const iframeElementHandle = await this.page.$('#ifrm_tab');
+        const iframeElementHandle = await this.page.waitForSelector(
+            '#ifrm_tab',
+        );
         if (!iframeElementHandle) {
             throw new Error('iframeElementHandle not found');
         }
@@ -116,7 +120,7 @@ export class PurchaseLotteryPuppeteerUseCase implements PurchaseLotteryUseCase {
     }
 
     private async purchase() {
-        const purchaseButton = await this.frame.$('#btnBuy');
+        const purchaseButton = await this.frame.waitForSelector('#btnBuy');
         if (!purchaseButton) {
             throw new Error('purchaseButton not found');
         }
@@ -124,13 +128,14 @@ export class PurchaseLotteryPuppeteerUseCase implements PurchaseLotteryUseCase {
     }
 
     private async approvePurchase() {
-        const popupLayerConfirm = await this.frame.$('#popupLayerConfirm');
+        const popupLayerConfirm = await this.frame.waitForSelector(
+            '#popupLayerConfirm',
+        );
         if (!popupLayerConfirm) {
             throw new Error('popupLayerConfirm not found');
         }
-        const purchaseConfirmationButton = await popupLayerConfirm.$(
-            '.button.lrg.confirm',
-        );
+        const purchaseConfirmationButton =
+            await popupLayerConfirm.waitForSelector('.button.lrg.confirm');
         if (!purchaseConfirmationButton) {
             throw new Error('purchaseConfirmationButton not found');
         }
@@ -138,7 +143,7 @@ export class PurchaseLotteryPuppeteerUseCase implements PurchaseLotteryUseCase {
     }
 
     private async saveResult() {
-        const popupReceipt = await this.frame.$('#popReceipt');
+        const popupReceipt = await this.frame.waitForSelector('#popReceipt');
         if (popupReceipt) {
             await this.getScreenshot(popupReceipt);
             await this.assignWinningNumbers(popupReceipt);
