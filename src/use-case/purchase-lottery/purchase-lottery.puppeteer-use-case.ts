@@ -107,9 +107,12 @@ export class PurchaseLotteryPuppeteerUseCase implements PurchaseLotteryUseCase {
     }
 
     private async goToPurchasePage() {
-        await this.page.goto(
-            'https://el.dhlottery.co.kr/game/TotalGame.jsp?LottoId=LO40',
-        );
+        await Promise.all([
+            this.page.goto(
+                'https://el.dhlottery.co.kr/game/TotalGame.jsp?LottoId=LO40',
+            ),
+            this.page.waitForNavigation(),
+        ]);
     }
 
     private async purchase() {
