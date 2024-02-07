@@ -66,7 +66,7 @@ export class PurchaseLotteryPuppeteerUseCase implements PurchaseLotteryUseCase {
         if (!loginButton) {
             throw new Error('loginButton not found');
         }
-        await loginButton.click();
+        await Promise.all([loginButton.click(), this.page.waitForNavigation()]);
     }
 
     private async assignBrowser() {
@@ -107,7 +107,6 @@ export class PurchaseLotteryPuppeteerUseCase implements PurchaseLotteryUseCase {
     }
 
     private async goToPurchasePage() {
-        this.page = await this.browser.newPage();
         await this.page.goto(
             'https://el.dhlottery.co.kr/game/TotalGame.jsp?LottoId=LO40',
         );
