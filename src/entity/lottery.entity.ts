@@ -8,6 +8,7 @@ import {
     UpdateDateColumn,
 } from 'typeorm';
 
+import { DateTimeUtil } from '../libs/utils/date-time-util';
 import { CompareWinningNumbersWithWinResult } from '../use-case/compare-winning-numbers-with-win-result/compare-winning-numbers-with-win-result';
 import { GetWinResultLottery } from '../use-case/get-win-result-lottery/get-win-result-lottery';
 
@@ -63,6 +64,7 @@ export class Lottery {
             this.getSameNumbersCount(winResultLottery.ballNumbers),
             this.getSameNumbersCount([winResultLottery.bonus]),
             this.winningNumbers,
+            DateTimeUtil.toLocalDate(this.createdAt),
         );
     }
 }
