@@ -59,9 +59,12 @@ export class GetWinResultLotteryPuppeteerUseCase
     }
 
     private async gotoWinResultPage() {
-        await this.page.goto(
-            'https://dhlottery.co.kr/gameResult.do?method=byWin',
-        );
+        await Promise.all([
+            this.page.goto(
+                'https://dhlottery.co.kr/gameResult.do?method=byWin',
+            ),
+            this.page.waitForNavigation(),
+        ]);
     }
 
     private async takeScreenshot() {
