@@ -68,7 +68,7 @@ export class GetWinResultLotteryPuppeteerUseCase
     }
 
     private async takeScreenshot() {
-        const winResultElement = await this.page.$('.win_result');
+        const winResultElement = await this.page.waitForSelector('.win_result');
         this.fileName =
             (await this.page.$eval(
                 '.win_result strong',
