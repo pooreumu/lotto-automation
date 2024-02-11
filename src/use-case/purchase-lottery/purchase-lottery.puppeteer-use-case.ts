@@ -62,7 +62,9 @@ export class PurchaseLotteryPuppeteerUseCase implements PurchaseLotteryUseCase {
         );
         await this.page.type('input[name=userId]', process.env.USER_ID ?? '');
         await this.page.type('input[name=password]', process.env.USER_PW ?? '');
-        const loginButton = await this.page.$('.btn_common.lrg.blu');
+        const loginButton = await this.page.waitForSelector(
+            '.btn_common.lrg.blu',
+        );
         if (!loginButton) {
             throw new Error('loginButton not found');
         }
