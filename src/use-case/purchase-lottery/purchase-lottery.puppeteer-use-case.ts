@@ -57,9 +57,12 @@ export class PurchaseLotteryPuppeteerUseCase implements PurchaseLotteryUseCase {
     private async login() {
         this.page = await this.browser.newPage();
         await this.page.setViewport({ width: 1920, height: 1080 });
-        await this.page.goto(
-            'https://dhlottery.co.kr/user.do?method=login&returnUrl=',
-        );
+        await Promise.all([
+            this.page.goto(
+                'https://dhlottery.co.kr/user.do?method=login&returnUrl=',
+            ),
+            this.page.waitForNavigation(),
+        ]);
         await this.page.type('input[name=userId]', process.env.USER_ID ?? '');
         await this.page.type('input[name=password]', process.env.USER_PW ?? '');
         const loginButton = await this.page.waitForSelector(
