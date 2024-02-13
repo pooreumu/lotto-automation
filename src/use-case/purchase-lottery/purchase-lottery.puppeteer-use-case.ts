@@ -25,6 +25,7 @@ export class PurchaseLotteryPuppeteerUseCase implements PurchaseLotteryUseCase {
     private fileName: string;
     private _winningNumbers: string[];
     private _round: string;
+    private _remainingBalance: string;
 
     constructor() {
         this.filePath = path.join(process.cwd(), 'screenshots/');
@@ -44,10 +45,15 @@ export class PurchaseLotteryPuppeteerUseCase implements PurchaseLotteryUseCase {
         await this.purchase();
         await this.approvePurchase();
         await this.saveResult();
+        await this.assignRemainingBalance();
 
         await this.closeBrowser();
 
-        return new PurchaseLottery(this._winningNumbers, this._round);
+        return new PurchaseLottery(
+            this._winningNumbers,
+            this._round,
+            this._remainingBalance,
+        );
     }
 
     private async closeBrowser() {
@@ -203,5 +209,18 @@ export class PurchaseLotteryPuppeteerUseCase implements PurchaseLotteryUseCase {
 
     private assignFileName() {
         this.fileName = `${new Date().toISOString()}screenshot.png`;
+    }
+
+    private async assignRemainingBalance() {
+        await Promise.all([
+            this.page.goto('https://www.dhlottery.co.kr/'),
+            this.page.waitForNavigation(),
+        ]);
+        const remainingBalance = await this.page.$eval(
+            'body > div:nth-child(1) > header > div.header_con > div.top_menu > form > div > ul.information > li.money > a:nth-child(2) > strong',
+            (el) => el.textContent,
+        );
+
+        this._remainingBalance = remainingBalance ?? '';
     }
 }

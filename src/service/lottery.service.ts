@@ -69,7 +69,7 @@ export class LotteryService {
             this.saveWinningNumbersUseCase.execute(purchaseLottery),
             this.slackUseCase.sendNotification(
                 this.purchaseLotteryUseCase.file,
-                JSON.stringify(purchaseLottery.winningNumbers),
+                purchaseLottery.toSlackMessage(),
                 title,
             ),
         ]);

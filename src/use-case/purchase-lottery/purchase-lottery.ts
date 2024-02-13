@@ -3,10 +3,16 @@ import { Lottery } from '../../entity/lottery.entity';
 export class PurchaseLottery {
     public readonly winningNumbers: string[];
     public readonly round: string;
+    public readonly remainingBalance: string;
 
-    constructor(winningNumbers: string[], round: string) {
+    constructor(
+        winningNumbers: string[],
+        round: string,
+        remainingBalance: string,
+    ) {
         this.winningNumbers = winningNumbers;
         this.round = round;
+        this.remainingBalance = remainingBalance;
     }
 
     public toLottery(): Lottery {
@@ -16,5 +22,9 @@ export class PurchaseLottery {
             ),
             round: +this.round,
         });
+    }
+
+    public toSlackMessage(): string {
+        return `남은 금액: ${this.remainingBalance}`;
     }
 }
