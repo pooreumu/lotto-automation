@@ -10,7 +10,6 @@ import { GetWinResultLotteryPuppeteerUseCase } from '../use-case/get-win-result-
 import { GET_WIN_RESULT_LOTTERY_USE_CASE } from '../use-case/get-win-result-lottery/get-win-result-lottery.use-case';
 import { PurchaseLotteryPuppeteerUseCase } from '../use-case/purchase-lottery/purchase-lottery.puppeteer-use-case';
 import { PURCHASE_LOTTERY_USE_CASE } from '../use-case/purchase-lottery/purchase-lottery.use-case';
-import { SaveWinningNumbersUseCase } from '../use-case/save-winning-numbers.use-case';
 import { SlackUseCase } from '../use-case/slack.use-case';
 
 @Module({
@@ -18,7 +17,6 @@ import { SlackUseCase } from '../use-case/slack.use-case';
     providers: [
         SlackUseCase,
         LotteryService,
-        SaveWinningNumbersUseCase,
         CompareWinningNumbersWithWinResultUseCase,
         {
             provide: PURCHASE_LOTTERY_USE_CASE,

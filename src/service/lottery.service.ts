@@ -5,6 +5,10 @@ import { Cron } from '@nestjs/schedule';
 
 import { GameCount } from '../domain/game-count';
 import { Catch } from '../libs/decorator/catch';
+import {
+    LOTTERY_REPOSITORY,
+    LotteryRepository,
+} from '../repository/lottery.repository';
 import { CompareWinningNumbersWithWinResultUseCase } from '../use-case/compare-winning-numbers-with-win-result/compare-winning-numbers-with-win-result.use-case';
 import { GetWinResultLottery } from '../use-case/get-win-result-lottery/get-win-result-lottery';
 import {
@@ -13,7 +17,6 @@ import {
 } from '../use-case/get-win-result-lottery/get-win-result-lottery.use-case';
 import { PurchaseLotteryPuppeteerUseCase } from '../use-case/purchase-lottery/purchase-lottery.puppeteer-use-case';
 import { PURCHASE_LOTTERY_USE_CASE } from '../use-case/purchase-lottery/purchase-lottery.use-case';
-import { SaveWinningNumbersUseCase } from '../use-case/save-winning-numbers.use-case';
 import { SlackUseCase } from '../use-case/slack.use-case';
 
 @Injectable()
@@ -26,7 +29,8 @@ export class LotteryService {
         private readonly purchaseLotteryUseCase: PurchaseLotteryPuppeteerUseCase,
         @Inject(GET_WIN_RESULT_LOTTERY_USE_CASE)
         private readonly getWinResultLotteryUseCase: GetWinResultLotteryUseCase,
-        private readonly saveWinningNumbersUseCase: SaveWinningNumbersUseCase,
+        @Inject(LOTTERY_REPOSITORY)
+        private readonly lotteryRepository: LotteryRepository,
         private readonly compareWinningNumbersWithWinResultUseCase: CompareWinningNumbersWithWinResultUseCase,
     ) {}
 
@@ -66,7 +70,7 @@ export class LotteryService {
             gameCount,
         );
         await Promise.all([
-            this.saveWinningNumbersUseCase.execute(purchaseLottery),
+            this.lotteryRepository.save(purchaseLottery.toLottery()),
             this.slackUseCase.sendNotification(
                 this.purchaseLotteryUseCase.file,
                 purchaseLottery.toSlackMessage(),
