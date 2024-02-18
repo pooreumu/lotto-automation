@@ -36,28 +36,115 @@ describe('Lottery', () => {
         });
     });
 
-    describe('getSameNumbersCount', () => {
+    describe('getSameNumbers', () => {
         it.each([
-            [[1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5, 6], 6],
-            [[1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5, 16], 5],
-            [[1, 2, 3, 4, 5, 6], [1, 2, 3, 14, 5, 6], 5],
-            [[1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 15, 16], 4],
-            [[1, 2, 3, 4, 5, 6], [1, 12, 3, 14, 15, 6], 3],
-            [[1, 2, 3, 4, 5, 6], [1, 12, 13, 14, 15, 6], 2],
-            [[1, 2, 3, 4, 5, 6], [11, 12, 3, 14, 15, 16], 1],
-            [[1, 2, 3, 4, 5, 6], [21, 22, 23, 24, 25, 26], 0],
+            [
+                [1, 2, 3, 4, 5, 6],
+                [1, 2, 3, 4, 5, 6],
+                [
+                    { number: 1, isSame: true },
+                    { number: 2, isSame: true },
+                    { number: 3, isSame: true },
+                    { number: 4, isSame: true },
+                    { number: 5, isSame: true },
+                    { number: 6, isSame: true },
+                ],
+            ],
+            [
+                [1, 2, 3, 4, 5, 6],
+                [1, 2, 3, 4, 5, 16],
+                [
+                    { number: 1, isSame: true },
+                    { number: 2, isSame: true },
+                    { number: 3, isSame: true },
+                    { number: 4, isSame: true },
+                    { number: 5, isSame: true },
+                    { number: 6, isSame: false },
+                ],
+            ],
+            [
+                [1, 2, 3, 4, 5, 6],
+                [1, 2, 3, 14, 5, 6],
+                [
+                    { number: 1, isSame: true },
+                    { number: 2, isSame: true },
+                    { number: 3, isSame: true },
+                    { number: 4, isSame: false },
+                    { number: 5, isSame: true },
+                    { number: 6, isSame: true },
+                ],
+            ],
+            [
+                [1, 2, 3, 4, 5, 6],
+                [1, 2, 3, 4, 15, 16],
+                [
+                    { number: 1, isSame: true },
+                    { number: 2, isSame: true },
+                    { number: 3, isSame: true },
+                    { number: 4, isSame: true },
+                    { number: 5, isSame: false },
+                    { number: 6, isSame: false },
+                ],
+            ],
+            [
+                [1, 2, 3, 4, 5, 6],
+                [1, 12, 3, 14, 15, 6],
+                [
+                    { number: 1, isSame: true },
+                    { number: 2, isSame: false },
+                    { number: 3, isSame: true },
+                    { number: 4, isSame: false },
+                    { number: 5, isSame: false },
+                    { number: 6, isSame: true },
+                ],
+            ],
+            [
+                [1, 2, 3, 4, 5, 6],
+                [1, 12, 13, 14, 15, 6],
+                [
+                    { number: 1, isSame: true },
+                    { number: 2, isSame: false },
+                    { number: 3, isSame: false },
+                    { number: 4, isSame: false },
+                    { number: 5, isSame: false },
+                    { number: 6, isSame: true },
+                ],
+            ],
+            [
+                [1, 2, 3, 4, 5, 6],
+                [11, 12, 3, 14, 15, 16],
+                [
+                    { number: 1, isSame: false },
+                    { number: 2, isSame: false },
+                    { number: 3, isSame: true },
+                    { number: 4, isSame: false },
+                    { number: 5, isSame: false },
+                    { number: 6, isSame: false },
+                ],
+            ],
+            [
+                [1, 2, 3, 4, 5, 6],
+                [21, 22, 23, 24, 25, 26],
+                [
+                    { number: 1, isSame: false },
+                    { number: 2, isSame: false },
+                    { number: 3, isSame: false },
+                    { number: 4, isSame: false },
+                    { number: 5, isSame: false },
+                    { number: 6, isSame: false },
+                ],
+            ],
         ])(
-            '%s과 %s는 같은 숫자가 %개 입니다.',
+            '%s과 %s의 비교 결과는 %o입니다.',
             (standard: number[], target: number[], diffNumbersCount) => {
                 const winningNumbers = Lottery.of({
                     winningNumbers: standard,
                     round: 1090,
                 });
 
-                const sameNumbersCount =
-                    winningNumbers.getSameNumbersCount(target);
+                const sameNumbersCount = winningNumbers.getSameNumbers(target);
 
-                expect(sameNumbersCount).toBe(diffNumbersCount);
+                expect(sameNumbersCount).toStrictEqual(diffNumbersCount);
             },
         );
     });
