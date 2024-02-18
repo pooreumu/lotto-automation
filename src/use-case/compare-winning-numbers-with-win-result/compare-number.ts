@@ -1,7 +1,9 @@
 export class CompareNumber {
-    constructor(readonly number: number, readonly isSame: boolean) {}
+    constructor(readonly winningNumber: number, readonly isSame: boolean) {}
 
     toSlackMessage() {
-        return this.isSame ? `\`${this.number}\`` : `${this.number}`;
+        return this.isSame
+            ? `\`${this.winningNumber}\``
+            : `${this.winningNumber}`;
     }
 }
