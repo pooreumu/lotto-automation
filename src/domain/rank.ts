@@ -4,7 +4,7 @@ import { Enum, EnumType } from 'ts-jenum';
 
 @Enum('code')
 export class ERank extends EnumType<ERank>() {
-    static readonly FISRT_PLACE = new ERank('FISRT_PLACE', '1등', '20억원', [
+    static readonly FIRST_PLACE = new ERank('FIRST_PLACE', '1등', '20억원', [
         {
             general: 6,
             bonus: 0,

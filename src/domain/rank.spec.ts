@@ -5,7 +5,7 @@ describe('Rank', () => {
         it('6개 번호 일치 하면 1등이다', () => {
             const result = ERank.getRank(6, 0);
 
-            expect(result).toBe(ERank.FISRT_PLACE);
+            expect(result).toBe(ERank.FIRST_PLACE);
         });
 
         it('5개 번호 일치 + 보너스 번호 일치 하면 2등이다', () => {
