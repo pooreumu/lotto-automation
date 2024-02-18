@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 
 import { DateTimeUtil } from '../libs/utils/date-time-util';
+import { CompareNumber } from '../use-case/compare-winning-numbers-with-win-result/compare-number';
 import { CompareWinningNumbersWithWinResult } from '../use-case/compare-winning-numbers-with-win-result/compare-winning-numbers-with-win-result';
 import { GetWinResultLottery } from '../use-case/get-win-result-lottery/get-win-result-lottery';
 
@@ -51,14 +52,12 @@ export class Lottery {
         }
     }
 
-    public getSameNumbers(
-        numbers: number[],
-    ): { number: number; isSame: boolean }[] {
+    public getSameNumbers(numbers: number[]): CompareNumber[] {
         return this.winningNumbers.map((winningNumber) => {
-            return {
-                number: winningNumber,
-                isSame: numbers.includes(winningNumber),
-            };
+            return new CompareNumber(
+                winningNumber,
+                numbers.includes(winningNumber),
+            );
         });
     }
 
@@ -69,7 +68,6 @@ export class Lottery {
             this.round,
             this.getSameNumbers(winResultLottery.ballNumbers),
             this.getSameNumbers([winResultLottery.bonus]),
-            this.winningNumbers,
             DateTimeUtil.toLocalDate(this.createdAt),
         );
     }
