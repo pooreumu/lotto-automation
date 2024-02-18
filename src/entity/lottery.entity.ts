@@ -51,9 +51,15 @@ export class Lottery {
         }
     }
 
-    public getSameNumbersCount(numbers: number[]): number {
-        return this.winningNumbers.filter((number) => numbers.includes(number))
-            .length;
+    public getSameNumbers(
+        numbers: number[],
+    ): { number: number; isSame: boolean }[] {
+        return this.winningNumbers.map((winningNumber) => {
+            return {
+                number: winningNumber,
+                isSame: numbers.includes(winningNumber),
+            };
+        });
     }
 
     public toCompareWinningNumbersWithWinResultDto(
@@ -61,8 +67,8 @@ export class Lottery {
     ): CompareWinningNumbersWithWinResult {
         return new CompareWinningNumbersWithWinResult(
             this.round,
-            this.getSameNumbersCount(winResultLottery.ballNumbers),
-            this.getSameNumbersCount([winResultLottery.bonus]),
+            this.getSameNumbers(winResultLottery.ballNumbers),
+            this.getSameNumbers([winResultLottery.bonus]),
             this.winningNumbers,
             DateTimeUtil.toLocalDate(this.createdAt),
         );
