@@ -35,7 +35,7 @@ export class LotteryService {
     ) {}
 
     @Catch(LotteryService.name)
-    @Cron('0 0 22 * * 6')
+    @Cron('0 0 21 * * 6')
     async getWinResultLottery() {
         this.logger.log('getWinResultLottery');
         const winResultLottery: GetWinResultLottery =
